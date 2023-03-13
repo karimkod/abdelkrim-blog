@@ -1,15 +1,11 @@
 title: Abdelkrim's Blog v0.1
-author:
-  name: Abdelkrim Bourennane
-  email: "abdelkrim.bournane@gmail.com"
+author: Abdelkrim Bourennane
+email: "abdelkrim.bournane@gmail.com"
   
-theme: minima
+twitter_username: karimkos
+github_username:  karimkod
+instagram_username: codewkarim
+linkedin_username: abdelkrim-bournane
+youtube_username: codewkarim
 
-minima: 
-  social_links:
-    - { platform: github,          user_url: "https://github.com/karimkod" }
-    - { platform: twitter,         user_url: "https://twitter.com/karimkos" }
-    - { platform: linkedin,        user_url: "https://linkedin.com/in/abdelkrim-bournane" }
-    - { platform: youtube,         user_url: "https://www.youtube.com/@codewkarim" }
-    - { platform: instagram,       user_url: "https://instagram.com/codewkarim?igshid=ZDdkNTZiNTM=" }
-    - { platform: stackoverflow,   user_url: "https://stackoverflow.com/users/8929299/abdelkrim-bournane" }
+theme: minima
