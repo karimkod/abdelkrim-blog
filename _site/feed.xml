@@ -1,4 +1,282 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-08T15:49:57+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Abdelkrim.blog</title><author><name>Abdelkrim Bourennane</name></author><entry><title type="html">Toolbox For Porting Your Flutter Mobile Application to The Web</title><link href="http://localhost:4000/flutter/2021/10/18/Toolbox-for-porting-your-Flutter-Mobile-Application-to-the-Web.html" rel="alternate" type="text/html" title="Toolbox For Porting Your Flutter Mobile Application to The Web" /><published>2021-10-18T00:00:00+02:00</published><updated>2021-10-18T00:00:00+02:00</updated><id>http://localhost:4000/flutter/2021/10/18/Toolbox-for-porting-your-Flutter-Mobile-Application-to-the-Web</id><content type="html" xml:base="http://localhost:4000/flutter/2021/10/18/Toolbox-for-porting-your-Flutter-Mobile-Application-to-the-Web.html">&lt;p&gt;Since Google announced that Flutter web is stable starting from v2.0.0, a lot of business and application owners wanted to have a version of their already developed Flutter application ported to the web, since the web is easily accessible and Progressive Web Applications (PWA) offer an experience close to native apps.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-08T19:13:09+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Abdelkrim.blog</title><author><name>Abdelkrim Bourennane</name></author><entry><title type="html">Architecture Enforcement in Flutter Apps</title><link href="http://localhost:4000/flutter/architecture/2023/02/24/architecture-enforcement-in-flutter-apps.html" rel="alternate" type="text/html" title="Architecture Enforcement in Flutter Apps" /><published>2023-02-24T00:00:00+01:00</published><updated>2023-02-24T00:00:00+01:00</updated><id>http://localhost:4000/flutter/architecture/2023/02/24/architecture-enforcement-in-flutter-apps</id><content type="html" xml:base="http://localhost:4000/flutter/architecture/2023/02/24/architecture-enforcement-in-flutter-apps.html">&lt;p&gt;When we start writing a Flutter application (or any other language/framework for this matter), we always have an architecture in mind that we want our code to respect and follow. Different architectural styles have different objectives and each buys you different options.
+However, when the project gets bigger and more coding hands are involved, the code can go astray, and we start diverging from our desired architecture (excluding, the case when the architecture itself shifts as part of an evolutionary design). This phenomenon is known as a &lt;a href=&quot;https://www.georgefairbanks.com/software-architecture/model-code-gap/&quot;&gt;model-code gap&lt;/a&gt; :&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The model code gap is an idea from George Fairbanks’s book “&lt;a href=&quot;https://www.georgefairbanks.com/book/&quot;&gt;Just enough software architecture.&lt;/a&gt;” It describes the conceptual gap between the abstractions we use to discuss software architecture (a model) and the reality of the executed source code. — &lt;a href=&quot;https://icepanel.io/blog/2022-11-30-the-model-code-gap&quot;&gt;From The model code gap \ IcePanel Blog&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;To remediate the model-code gap, we have several tools and techniques that we can use to “&lt;a href=&quot;https://www.kamilgrzybek.com/blog/posts/modular-monolith-architecture-enforcement&quot;&gt;Enforce the architecture&lt;/a&gt;” (I recommend reading the article as it goes into details about Architecture enforcement). These tools can be summarized from faster and limited, to slower and flexible, as follows:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Compile time enforcement:&lt;/strong&gt; This category contains everything that we have in the language that allows us to enforce encapsulation, packaging, and dependency rules and directions. (e.g.: private vs. public fields, package dependencies, etc.).&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Automated checks:&lt;/strong&gt; This includes extra configuration or extra code that we use specifically to allow/forbid certain things to be done in our codebase. Static code analysis technique is part of this category and in some ecosystems, we can write tests for the architecture of the code by using tools like &lt;a href=&quot;https://archunitnet.readthedocs.io/en/latest/&quot;&gt;ArchUnitNET&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Code Review:&lt;/strong&gt; This involves the human factor, either with pair programming or asynchronous code reviews in order to “manually” check that the architecture is respected and that the code adheres to the desired design that’s probably has been documented in an &lt;a href=&quot;https://adr.github.io/&quot;&gt;Architectural Decision Record&lt;/a&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Theory aside, when it comes to the code, the architecture is not boxes, nor arrows. It’s which parts of the code are together (cohesion) and who is calling it (coupling). So, enforcing the architecture boils down to putting the code in the desired place and allowing it to be called from where we want it to be called. And this article tries to go through what we have in our hands as flutter developers in order to achieve that.&lt;/p&gt;
+
+&lt;h1 id=&quot;the-flutter-case&quot;&gt;The Flutter case:&lt;/h1&gt;
+&lt;h2 id=&quot;motivation-&quot;&gt;Motivation :&lt;/h2&gt;
+&lt;p&gt;Looking at the Flutter ecosystem, most of us (I am a culprit as well) tend to just create a project and start right by putting everything in the lib/ directory, without caring too much about the boundaries of our app, even if we had a specific architecture in mind (like in &lt;a href=&quot;https://github.com/ResoCoder/flutter-tdd-clean-architecture-course&quot;&gt;here&lt;/a&gt; and &lt;a href=&quot;https://github.com/nanosoftonline/clean-flutter&quot;&gt;here&lt;/a&gt;), we tend to think of it in terms of folders and files which in reality doesn’t have any enforcement at all, and adding a dependency from a folder to another is just a matter of accessing the IDE actions and auto import the missing file which adds the famous import ‘file.dart’ at the start of the file.
+The ease of such an “import” mechanism is like having a tap that’s ready to be opened, at any time, for free, to add water to the big bull of mud we are forming.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-toolbox-&quot;&gt;The toolbox :&lt;/h2&gt;
+&lt;p&gt;Flutter, or more concretely, dart, has many mechanisms that we can leverage in order to enforce our architecture and apply one of the above-mentioned techniques. We will also try to cover the pros/cons of each one, so we can choose the right one for our needs.&lt;/p&gt;
+
+&lt;p&gt;For the sake of demo and simplicity, I create a &lt;a href=&quot;https://github.com/karimkod/architecture_enforcement_in_flutter&quot;&gt;simple/sample app&lt;/a&gt; to query a question from the &lt;a href=&quot;https://the-trivia-api.com/&quot;&gt;Trivia API&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;1-the-single-file-case-&quot;&gt;1. The single file case :&lt;/h3&gt;
+&lt;p&gt;Since dart provides two access modifiers which are public and library private, then we can use that in order to control our architecture. The idea is to put all relevant parts of functionality in one file (which is by default one library) and only let the public what we need from our UI, this technique is compile-time enforcement.&lt;/p&gt;
+
+&lt;p&gt;You can find the example &lt;a href=&quot;https://github.com/karimkod/architecture_enforcement_in_flutter/blob/main/single_file_case/lib/trivia_quiz.dart&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;In our case, we have a QuizzService which is a service that will contain different use cases, for now, it contains only one use case, “Get Random Question”. The only parts that we need public are the service and the Quizz Type. The other ones (like the repository interface and implementations) are all private.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Pros :&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Allow strict control of the public API: only the service and the domain model are exposed.&lt;/li&gt;
+  &lt;li&gt;Cohesion is very high: since we bundled everything related to the functionality in one file, we have everything together (but this is both a blessing and a curse)&lt;/li&gt;
+  &lt;li&gt;Simple structure: using the files makes it easier to navigate the project and the folder structure is very flat.&lt;/li&gt;
+  &lt;li&gt;Fits a package (file, in this case) by feature design.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;Cons :&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Maintainability/Readability: Having everything in one file may make it difficult to different code parts and may make the readability of the code suffer. Especially, if the file gets bigger and parts of it (like Database, or HTTP calls) get complicated or very low level. This can be solved by having multiple files with the “library/part/part of” features of dart that will allow us to create multiple files that are logically equivalent to the same file but these mechanisms are &lt;a href=&quot;https://dart.dev/guides/libraries/create-library-packages#organizing-a-library-package&quot;&gt;discouraged&lt;/a&gt; by the dart team, and they are poorly documented anyway.&lt;/li&gt;
+  &lt;li&gt;One-way protection: Although we have protected the UI from using the repository directly we don’t have that protection the other way around. So, our single file can still import a Widget (or any other type) and reference it without any warning/error.&lt;/li&gt;
+  &lt;li&gt;Rigid:
+    &lt;ul&gt;
+      &lt;li&gt;For testing: it is difficult to perform a simple unit test without having &lt;a href=&quot;https://enterprisecraftsmanship.com/posts/code-pollution/&quot;&gt; code pollution &lt;/a&gt; ( _FakeRepository and testCompose()) And that’s a byproduct of our hard boundary. We may push toward having dependency injection, but this will defy the purpose of having everything in one file since we will break the hard boundary we set with the privacy mechanism. But if we can afford to have only integration tests, then that’s maybe fine. I tried to use the ‘library/part/part of’ keywords, but their functionality doesn’t seem to span the test folder — I couldn’t say for sure, since I couldn’t find any official documentation.&lt;/li&gt;
+      &lt;li&gt;For extensibility and reusability: If we have code or logic we want to share across features then we are obliged to have everything in the same file or else create a duplication — the logic is not part of a public API —.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I personally don’t favor this solution too much, for the different cons I mentioned above and I felt like fighting it in order to test it. and as I do TDD, I sometimes need the option to gear down and test logic in entities especially if it’s a complex logic (or logic that can create a combinatorial explosion if tested from a client class/code, etc.) But this is my opinion and different people have different &lt;a href=&quot;https://www.christianfindlay.com/blog/test-isolation-expensive&quot;&gt; takes &lt;/a&gt;, and there is always a &lt;a href=&quot;https://www.youtube.com/watch?v=9imyW_WAYP4&amp;amp;t=2018s&quot;&gt; trade-off between granularity and testability &lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;2-package-and-analyze-&quot;&gt;2. Package and Analyze :&lt;/h3&gt;
+&lt;p&gt;This approach leverages the use of dart (or flutter) &lt;a href=&quot;https://dart.dev/guides/libraries/create-library-packages&quot;&gt; packages &lt;/a&gt; and &lt;a href=&quot;https://dart.dev/guides/language/analysis-options&quot;&gt; dart static analyzer &lt;/a&gt;. And as we will see shortly it can be either an automated check or a compile-time enforcement.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;The difference between dart and flutter packages is that the latter depends on flutter SDK and the former only depends on dart SDK. I tend to use dart packages whenever I have packages that don’t need any UI elements or types and only keep dependency from Flutter on the UI (usually, the main project) package.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;The idea of this approach is to create the flutter project and create several other packages to encapsulate what we want to package together, for example in the case of a clean architecture we can have a package by layer, like a core package, an infrastructure layer, etc. In the case of a vertical slice architecture, we can package by feature or package by a set of cohesive features.&lt;/p&gt;
+
+&lt;p&gt;In our example, I have created a package called trivia_quiz that contains the logic and all the types related to getting a random question from Trivia API. The package also contains the related unit and contract tests.&lt;/p&gt;
+
+&lt;p&gt;You can find the example &lt;a href=&quot;https://github.com/karimkod/architecture_enforcement_in_flutter/tree/main/package_by_layer&quot;&gt; here &lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Alongside the package organization, we can use a dart analyzer to enforce the import style and only allow import statements referencing the package and not single files inside the packages with relative file imports. As you can see in the analysis_options.yaml I have marked the two analyzer’s hints to be errors, this way I have a stronger alert when they happen. I also needed to enable always_use_package_importssince it’s not enabled in the imported flutter.yaml file. unlike the avoid_relative_lib_imports.&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;package:flutter_lints/flutter.yaml&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;analyzer&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; 
+  &lt;span class=&quot;na&quot;&gt;errors&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; 
+    &lt;span class=&quot;na&quot;&gt;avoid_relative_lib_imports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;error&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;always_use_package_imports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;error&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;linter&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;rules&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;always_use_package_imports&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Now, if we have any dart-enabled IDE, or we run flutter analyze we can see the errors when we try to import something using a relative path, bypassing the public API of the package. (the &lt;a href=&quot;https://dart.dev/guides/libraries/create-library-packages&quot;&gt; documentation &lt;/a&gt; explains very well how the packages work, so I recommend reading it).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/flutter-architecture-enforcement/1_4DUa0Me_tILnrxFQiCdYPQ.webp&quot; alt=&quot; error when trying to relatively import a file inside the src folder of a package.&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;It’s also possible to integrate flutter analyze in your CI pipeline in order to gatekeep commits/PR from violating the aforementioned rules.&lt;/p&gt;
+
+&lt;h4 id=&quot;where-to-create-the-package-&quot;&gt;Where to create the package :&lt;/h4&gt;
+&lt;p&gt;The behavior of this approach depends on where you put the packages you create:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Inside the flutter’s lib folder: This will raise the linter errors mentioned earlier (the case of the previous screenshot) but doesn’t force you to import the package in flutter’s pubspec.yml.&lt;/li&gt;
+  &lt;li&gt;Outside the flutter’s lib folder: This will raise the linter errors mentioned as well as a compilation error and the project won’t compile at all, so you have a much stronger prevention from importing things you don’t want to import. And any package you need to use needs to be referenced in the pubspec.yml of the referencing package. The error triggered is the following :&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/flutter-architecture-enforcement/1_iEOyy_Huh59U4wUIz8Vm0Q.webp&quot; alt=&quot;Compilation error when trying to access the file of a package relatively&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Pros :&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Allow control of the public API: We can have as many files as we want in the package but we can pick which ones we want other packages to depend on using the export and show mechanism.&lt;/li&gt;
+  &lt;li&gt;Control package dependencies: Since each package has its own pubspec.yaml we can control what each package depends on explicitly, and figuring out what the package uses is pretty easy.&lt;/li&gt;
+  &lt;li&gt;Easier to maintain and extend: Having a full package with the source code and the test together makes it nicer and easier to maintain. And we don’t worry much about what to put public and private (at least inside a package).&lt;/li&gt;
+  &lt;li&gt;Natural: compared to the single file solution, it feels more natural to work with packages to achieve enforcement.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Cons :&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Too many folders, too many files: The number of packages can create a complicated folder structure that can lead to difficulty to work on the project, especially when working on features that span multiple packages (but this depends on how we structure our packages).&lt;/li&gt;
+  &lt;li&gt;Relying only on the linter errors: Linter errors are fake errors, they don’t prevent the app from compiling, so enforcing this will need a CI that runs the analyzer and gatekeep the commits that break the linter rules. But this depends on whether you choose i or ii options above.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I personally favor this over the single file case and It’s my current way of working once the project starts to get a bigger codebase and a team starts growing. (really, when needed).&lt;/p&gt;
+
+&lt;h3 id=&quot;3-external-packages&quot;&gt;3. External packages:&lt;/h3&gt;
+&lt;p&gt;The approaches we discussed so far are native to the language and the framework. Alongside that, We can add extra layers of enforcement using external packages:&lt;/p&gt;
+
+&lt;p&gt;1 — &lt;a href=&quot;https://github.com/kawa1214/import-lint&quot;&gt;import_lint&lt;/a&gt;: this can be very practical in our use case since it provides lint rules to analyze imports in the codebase. From the README:&lt;/p&gt;
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;analyzer&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;plugins&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;import_lint&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;import_lint&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;rules&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;use_case_rule&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;target_file_path&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;use_case/*_use_case.dart&quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;not_allow_imports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;use_case/*_use_case.dart&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;exclude_imports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;use_case/base_use_case.dart&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;repository_rule&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;target_file_path&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;repository/*_repository.dart&quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;not_allow_imports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;
+                    &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;use_case/*_use_case.dart&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt;
+                    &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;repository/*_repository.dart&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt;
+                    &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;space&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;test/*.dart&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt;
+                    &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;repository/sub/**/*.dart&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt;
+                &lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;exclude_imports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[]&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;domain_rule&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;target_file_path&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;domain/**/*_entity.dart&quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;not_allow_imports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;domain/*_entity.dart&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;exclude_imports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;domain/base_entity.dart&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;package_rule&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;target_file_path&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;**/*.dart&quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;not_allow_imports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;package:import_lint/import_lint.dart&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;exclude_imports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[]&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;core_package_rule&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;target_file_path&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;package:core/**/*.dart&quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;not_allow_imports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;package:module/**/*.dart&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;exclude_imports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This specifies which imports are not allowed not_allow_imports for the files that are included in the target path target_file_path.
+This package inherits what we said about the usage of the analyzer earlier but it offers more fine-grained control over the dependencies inside our codebase. The package looks maintained and it has 85% in popularity. I personally would use it if I needed it.&lt;/p&gt;
+
+&lt;p&gt;2 — &lt;a href=&quot;https://pub.dev/packages/dart_code_metrics&quot;&gt;dart_code_metrics&lt;/a&gt;: Although this is a general static analysis package, it provides a rule that may be of use to us, avoid-banned-imports and you can define the banned imports as follows :&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;dart_code_metrics&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;rules&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;avoid-banned-imports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;entries&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;some/folder/.*&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.dart&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;another/folder/.*&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.dart&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;deny&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;package:flutter/material.dart&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Do&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;not&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;import&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Flutter&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Material&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Design&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;library,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;we&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;should&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;not&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;depend&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;it!&quot;&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;core/.*&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.dart&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;deny&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;package:flutter_bloc/flutter_bloc.dart&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;State&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;management&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;should&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;be&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;not&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;used&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;inside&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;core&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;folder.&apos;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This package is also very popular and maintained, and it has other usages than only import banning. This can be of use if you already use this package in your projects and don’t want to depend on another static analysis package.&lt;/p&gt;
+
+&lt;p&gt;3 — &lt;a href=&quot;https://github.com/gustavo-hillesheim/dart_arch_test&quot;&gt;dart_arch_test&lt;/a&gt;: This package provides a testing toolset that allows you to build automated tests to define the dependency rules in your codebase. Like :&lt;/p&gt;
+
+&lt;div class=&quot;language-dart highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;package:my_package/main.dart&apos;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;package:arch_test/arch_test.dart&apos;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;archTest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;classes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;that&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;areInsideFolder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;entity&apos;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;should&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;extendClass&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BaseEntity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;(),&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Since this is an automated test, it can be integrated into the CI and it can be a strong indicator that we introduced a gap between our code and model.
+Unlike the first package, this one doesn’t look popular and it only targets Linux, macOS, and Windows (from what I can see in the &lt;a href=&quot;https://pub.dev/packages/arch_test&quot;&gt;pub.dev&lt;/a&gt;), and that’s really a bummer for a flutter developer. And, looking at the repo I can see that there is a work in progress in some branches but not much activity.&lt;/p&gt;
+
+&lt;h2 id=&quot;closing-words-&quot;&gt;Closing words :&lt;/h2&gt;
+&lt;p&gt;I wrote this article to explore different techniques that a flutter dev or a team can adopt in order to enforce an architecture in a codebase. And also I got frustrated about how easy it was to just depend on something with an import statement that probably the IDE added and not have any error or warning when we break a dependency rule (&lt;a href=&quot;https://stackoverflow.com/questions/74288334/is-there-a-way-to-prevent-importing-files-from-flutter-framework-in-dart&quot;&gt;there is at least another person like me&lt;/a&gt;).
+This may or may not be the case for everyone, some people prefer doing code reviews in order to keep the codebase in shape, but these are not an alternative to that but tools we can use alongside it.&lt;/p&gt;
+
+&lt;p&gt;If you have read this far, then thank you, and let me know if I missed something or if you have achieved architecture enforcement in a different ways.&lt;/p&gt;</content><author><name>Abdelkrim Bourennane</name></author><category term="Flutter" /><category term="Architecture" /><summary type="html">When we start writing a Flutter application (or any other language/framework for this matter), we always have an architecture in mind that we want our code to respect and follow. Different architectural styles have different objectives and each buys you different options. However, when the project gets bigger and more coding hands are involved, the code can go astray, and we start diverging from our desired architecture (excluding, the case when the architecture itself shifts as part of an evolutionary design). This phenomenon is known as a model-code gap :</summary></entry><entry><title type="html">Open Window Loses Focus Issue on Windows, the Reason Is Wsl</title><link href="http://localhost:4000/windows/wsl/2022/11/16/open-window-looses-focus-on-windows-wsl.html" rel="alternate" type="text/html" title="Open Window Loses Focus Issue on Windows, the Reason Is Wsl" /><published>2022-11-16T00:00:00+01:00</published><updated>2022-11-16T00:00:00+01:00</updated><id>http://localhost:4000/windows/wsl/2022/11/16/open-window-looses-focus-on-windows-wsl</id><content type="html" xml:base="http://localhost:4000/windows/wsl/2022/11/16/open-window-looses-focus-on-windows-wsl.html">&lt;p&gt;I had an issue that was very annoying and disturbing, and I didn’t notice it until I focused very well on it and had to diagnose it to find what’s the problem really is and find a solution (if we can call it that) to it.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-symptoms-&quot;&gt;The symptoms :&lt;/h2&gt;
+&lt;p&gt;Any window you are using will lose focus and if you were typing into it, you will lose the ability to do so until you take the mouse and click on it in order to be able to type again. And this happens frequently until it becomes really annoying. (Sorry, I got mad).&lt;/p&gt;
+
+&lt;h2 id=&quot;the-analysis-&quot;&gt;The analysis :&lt;/h2&gt;
+&lt;p&gt;After noticing the issue, I had to find a way to diagnose this and see why I was losing the window focus.&lt;/p&gt;
+
+&lt;p&gt;I had the idea to see what window has focus or what window/program is taking focus temporarily. So, I &lt;a href=&quot;https://stackoverflow.com/questions/46351885/how-to-grab-the-currently-active-foreground-window-in-powershell/70010344#70010344&quot;&gt;found this PowerShell&lt;/a&gt; script that prints the windows that currently have a focus in the console, and the good thing is that it runs continuously (while(1), who said infinite loops are bad).&lt;/p&gt;
+
+&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;Add-Type&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;@&quot;
+using System;
+using System.Runtime.InteropServices;
+using System.Text;
+public class APIFuncs
+{
+    [DllImport(&quot;user32.dll&quot;, CharSet = CharSet.Auto, SetLastError = true)]
+    public static extern int GetWindowText(IntPtr hwnd,StringBuilder
+    lpString, int cch);
+    [DllImport(&quot;user32.dll&quot;, SetLastError=true, CharSet=CharSet.Auto)]
+    public static extern IntPtr GetForegroundWindow();
+    [DllImport(&quot;user32.dll&quot;, SetLastError=true, CharSet=CharSet.Auto)]
+    public static extern Int32 GetWindowThreadProcessId(IntPtr hWnd,out
+    Int32 lpdwProcessId);
+    [DllImport(&quot;user32.dll&quot;, SetLastError=true, CharSet=CharSet.Auto)]
+    public static extern Int32 GetWindowTextLength(IntPtr hWnd);
+}
+&quot;@&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+
+&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$w&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;apifuncs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetForegroundWindow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$len&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;apifuncs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetWindowTextLength&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$w&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$sb&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;New-Object&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;text.stringbuilder&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;-ArgumentList&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$len&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$rtnlen&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;apifuncs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetWindowText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$w&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$sb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$sb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Capacity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write-host&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Window Title: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$sb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;tostring&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sleep&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The result was the following :&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/windows-wsl-focus-issue/1_kAwWQ0JgpgYHLRbRAZ36zQ.webp&quot; alt=&quot;An output of the powershell script&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;As you can see, this “RemoteApp” is taking over the focus from my “Google Chrome” Browser.&lt;/p&gt;
+
+&lt;p&gt;And after a couple of Google searches, I found out that this app is the Windows Remote Desktop Connection (RDP) app.&lt;/p&gt;
+
+&lt;p&gt;So, I opened the process explorer (you can find it and install it &lt;a href=&quot;https://learn.microsoft.com/en-us/sysinternals/downloads/process-explorer&quot;&gt;here&lt;/a&gt;) This is a verbose and detailed alternative for Windows Task Manager. I filtered by the name of the RDP process, which is (mstsc.exe). And found this :&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/windows-wsl-focus-issue/1_S505ppO_Y4g7o2YF0Lmd8w.webp&quot; alt=&quot;screenshot of the search&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I was worried because I thought maybe someone has access to my computer over RDP. So, I check the &lt;a href=&quot;https://www.anyviewer.com/how-to/view-connection-history-remote-desktop-windows-10-2578.html&quot;&gt;history of RDP&lt;/a&gt; connections in my PC and it was empty, then I checked if &lt;a href=&quot;https://www.anyviewer.com/how-to/how-to-check-if-remote-desktop-is-enabled-0007.html&quot;&gt;RDP was even enabled on my PC&lt;/a&gt; but found nothing as well.&lt;/p&gt;
+
+&lt;p&gt;So, I figured that if you double-click on the process in Process Explorer you can see what command line launched the process, and here was the Eureka moment.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/windows-wsl-focus-issue/1_AIsDrLcne7G9YhjYyqen5Q.webp&quot; alt=&quot;The details of the RDP&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;It was WSL (Windows Subsytem of linux, which I personally need to dev) and I have various tools that need WSL, like Docker.&lt;/p&gt;
+
+&lt;p&gt;I didn’t do any further research on why WSL needs an RDP connection, but it was stealing my focus (literally). Found other people complaining about the same problem. (like &lt;a href=&quot;https://youtrack.jetbrains.com/issue/IDEA-282196/Constant-loss-of-editor-focus-when-using-Windows-11-and-WSL&quot;&gt;here&lt;/a&gt;, the last comment states that it has nothing to do with any JetBrains tools which I confirm, it’s not a JetBrains issue, I use Rider and IntelliJ.)&lt;/p&gt;
+
+&lt;h2 id=&quot;the-solution&quot;&gt;The solution&lt;/h2&gt;
+&lt;p&gt;I couldn’t find anything useful or a reasonable fix apart from restarting WSL using a command line to shut it down (be careful, if you have apps using WSL this will kill them or make them misbehave):&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;wsl --shutdown&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;you can run the following command to make sure all WSL are shut down :&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;wsl --list --verbose&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;And then run the following to restart it (or restart any app that uses it, it will launch it automatically) :&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;wsl&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Thanks for reading this far, this was a quick post that maybe will help someone in the future. If you know a fix that I couldn’t find or have an insight about this issue, please put it in a comment or reach out to me, I can add it to this post with credits (of course!).&lt;/p&gt;</content><author><name>Abdelkrim Bourennane</name></author><category term="Windows" /><category term="WSL" /><summary type="html">I had an issue that was very annoying and disturbing, and I didn’t notice it until I focused very well on it and had to diagnose it to find what’s the problem really is and find a solution (if we can call it that) to it.</summary></entry><entry><title type="html">A Reflection on My Academic Curriculum, as a Software Engineer</title><link href="http://localhost:4000/miscellaneous/2022/07/08/reflection-on-my-academic-curriculum.html" rel="alternate" type="text/html" title="A Reflection on My Academic Curriculum, as a Software Engineer" /><published>2022-07-08T00:00:00+02:00</published><updated>2022-07-08T00:00:00+02:00</updated><id>http://localhost:4000/miscellaneous/2022/07/08/reflection-on-my-academic-curriculum</id><content type="html" xml:base="http://localhost:4000/miscellaneous/2022/07/08/reflection-on-my-academic-curriculum.html">&lt;p&gt;There are some habits I learned from my academic curriculum. Some of them are good, some of them are not at all. During the programming courses we took, we never had an emphasis on tests, our code structure and software architecture was never a criterion for evaluating our homework/exams (It was always the UI that mattered if you impress the teacher quite enough you will get an excellent grade. Which I find sad)&lt;/p&gt;
+
+&lt;p&gt;We did some practices just for the sake of doing them, like using pull requests even in a 1-person project. (and I continued doing that during my first years of professional life because It was depicted to me that it’s the way to go…)&lt;/p&gt;
+
+&lt;p&gt;We may say that some things are very specific and can’t be taught in university material, I completely agree, but I was on a Software engineering path and some things are crucial to understanding.&lt;/p&gt;
+
+&lt;p&gt;Some courses were interesting from the title, but it was merely listing the content and never teaching the motivation and the trade-offs. And we had technology-oriented courses, like learning JAVA. I have nothing against Java, but the course entitled OOP.&lt;/p&gt;
+
+&lt;p&gt;I had the impression that we were being told what to do and how to do it but rarely the motivations and the thought work behind it, which with time I found that it’s the most important thing because of its portability and what we really need before starting to do.&lt;/p&gt;
+
+&lt;p&gt;All this to say, it’s important to review the academic paths. Because that’s the fundamentals that fresh graduates will lean on during their first years. And to make it easier for mentors who are already in the industry. They should be guiding instead of breaking and rebuilding.&lt;/p&gt;</content><author><name>Abdelkrim Bourennane</name></author><category term="Miscellaneous" /><summary type="html">There are some habits I learned from my academic curriculum. Some of them are good, some of them are not at all. During the programming courses we took, we never had an emphasis on tests, our code structure and software architecture was never a criterion for evaluating our homework/exams (It was always the UI that mattered if you impress the teacher quite enough you will get an excellent grade. Which I find sad)</summary></entry><entry><title type="html">Toolbox For Porting Your Flutter Mobile Application to The Web</title><link href="http://localhost:4000/flutter/2021/10/18/Toolbox-for-porting-your-Flutter-Mobile-Application-to-the-Web.html" rel="alternate" type="text/html" title="Toolbox For Porting Your Flutter Mobile Application to The Web" /><published>2021-10-18T00:00:00+02:00</published><updated>2021-10-18T00:00:00+02:00</updated><id>http://localhost:4000/flutter/2021/10/18/Toolbox-for-porting-your-Flutter-Mobile-Application-to-the-Web</id><content type="html" xml:base="http://localhost:4000/flutter/2021/10/18/Toolbox-for-porting-your-Flutter-Mobile-Application-to-the-Web.html">&lt;p&gt;Since Google announced that Flutter web is stable starting from v2.0.0, a lot of business and application owners wanted to have a version of their already developed Flutter application ported to the web, since the web is easily accessible and Progressive Web Applications (PWA) offer an experience close to native apps.&lt;/p&gt;
 
 &lt;p&gt;This article doesn’t discuss UI matters (responsiveness, UI/UX…), it only tackles the problems we may encounter for running the app and its functionalities on the web platform.&lt;/p&gt;
 

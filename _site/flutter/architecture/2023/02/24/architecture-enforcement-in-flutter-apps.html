@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Architecture Enforcement in Flutter Apps | Abdelkrim.blog</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Architecture Enforcement in Flutter Apps" />
+<meta name="author" content="Abdelkrim Bourennane" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="When we start writing a Flutter application (or any other language/framework for this matter), we always have an architecture in mind that we want our code to respect and follow. Different architectural styles have different objectives and each buys you different options. However, when the project gets bigger and more coding hands are involved, the code can go astray, and we start diverging from our desired architecture (excluding, the case when the architecture itself shifts as part of an evolutionary design). This phenomenon is known as a model-code gap :" />
+<meta property="og:description" content="When we start writing a Flutter application (or any other language/framework for this matter), we always have an architecture in mind that we want our code to respect and follow. Different architectural styles have different objectives and each buys you different options. However, when the project gets bigger and more coding hands are involved, the code can go astray, and we start diverging from our desired architecture (excluding, the case when the architecture itself shifts as part of an evolutionary design). This phenomenon is known as a model-code gap :" />
+<link rel="canonical" href="http://localhost:4000/flutter/architecture/2023/02/24/architecture-enforcement-in-flutter-apps.html" />
+<meta property="og:url" content="http://localhost:4000/flutter/architecture/2023/02/24/architecture-enforcement-in-flutter-apps.html" />
+<meta property="og:site_name" content="Abdelkrim.blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-24T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Architecture Enforcement in Flutter Apps" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Abdelkrim Bourennane"},"dateModified":"2023-02-24T00:00:00+01:00","datePublished":"2023-02-24T00:00:00+01:00","description":"When we start writing a Flutter application (or any other language/framework for this matter), we always have an architecture in mind that we want our code to respect and follow. Different architectural styles have different objectives and each buys you different options. However, when the project gets bigger and more coding hands are involved, the code can go astray, and we start diverging from our desired architecture (excluding, the case when the architecture itself shifts as part of an evolutionary design). This phenomenon is known as a model-code gap :","headline":"Architecture Enforcement in Flutter Apps","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/flutter/architecture/2023/02/24/architecture-enforcement-in-flutter-apps.html"},"url":"http://localhost:4000/flutter/architecture/2023/02/24/architecture-enforcement-in-flutter-apps.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Abdelkrim.blog" /><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon/favicon-16x16.png">
+<link rel="manifest" href="/assets/img/favicon/site.webmanifest">
+<link rel="mask-icon" href="/assets/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="/assets/img/favicon/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+  
+</head><body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Abdelkrim.blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/categories/">Categories</a><a class="page-link" href="/">Home</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header"><img src="/assets/img/flutter-architecture-enforcement/1_PmCTmD9tHFD8L2nEVxg4PA.webp" alt="AI generated picture of a butterfly with gloden wings futuristc" class="featured-image-post" style="height: 350px; width: 100%; object-fit: cover;"><br/>
+    <h1 class="post-title p-name" itemprop="name headline">Architecture Enforcement in Flutter Apps</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2023-02-24T00:00:00+01:00" itemprop="datePublished">Feb 24, 2023
+      </time>
+      <span class="post-categories">
+  
+  
+  <a href="/categories/#Flutter">Flutter</a>
+  &nbsp;
+  
+  <a href="/categories/#Architecture">Architecture</a>
+  
+  
+</span></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>When we start writing a Flutter application (or any other language/framework for this matter), we always have an architecture in mind that we want our code to respect and follow. Different architectural styles have different objectives and each buys you different options.
+However, when the project gets bigger and more coding hands are involved, the code can go astray, and we start diverging from our desired architecture (excluding, the case when the architecture itself shifts as part of an evolutionary design). This phenomenon is known as a <a href="https://www.georgefairbanks.com/software-architecture/model-code-gap/">model-code gap</a> :</p>
+
+<blockquote>
+  <p>The model code gap is an idea from George Fairbanks’s book “<a href="https://www.georgefairbanks.com/book/">Just enough software architecture.</a>” It describes the conceptual gap between the abstractions we use to discuss software architecture (a model) and the reality of the executed source code. — <a href="https://icepanel.io/blog/2022-11-30-the-model-code-gap">From The model code gap \ IcePanel Blog</a></p>
+</blockquote>
+
+<p>To remediate the model-code gap, we have several tools and techniques that we can use to “<a href="https://www.kamilgrzybek.com/blog/posts/modular-monolith-architecture-enforcement">Enforce the architecture</a>” (I recommend reading the article as it goes into details about Architecture enforcement). These tools can be summarized from faster and limited, to slower and flexible, as follows:</p>
+
+<ol>
+  <li><strong>Compile time enforcement:</strong> This category contains everything that we have in the language that allows us to enforce encapsulation, packaging, and dependency rules and directions. (e.g.: private vs. public fields, package dependencies, etc.).</li>
+  <li><strong>Automated checks:</strong> This includes extra configuration or extra code that we use specifically to allow/forbid certain things to be done in our codebase. Static code analysis technique is part of this category and in some ecosystems, we can write tests for the architecture of the code by using tools like <a href="https://archunitnet.readthedocs.io/en/latest/">ArchUnitNET</a></li>
+  <li><strong>Code Review:</strong> This involves the human factor, either with pair programming or asynchronous code reviews in order to “manually” check that the architecture is respected and that the code adheres to the desired design that’s probably has been documented in an <a href="https://adr.github.io/">Architectural Decision Record</a>.</li>
+</ol>
+
+<p>Theory aside, when it comes to the code, the architecture is not boxes, nor arrows. It’s which parts of the code are together (cohesion) and who is calling it (coupling). So, enforcing the architecture boils down to putting the code in the desired place and allowing it to be called from where we want it to be called. And this article tries to go through what we have in our hands as flutter developers in order to achieve that.</p>
+
+<h1 id="the-flutter-case">The Flutter case:</h1>
+<h2 id="motivation-">Motivation :</h2>
+<p>Looking at the Flutter ecosystem, most of us (I am a culprit as well) tend to just create a project and start right by putting everything in the lib/ directory, without caring too much about the boundaries of our app, even if we had a specific architecture in mind (like in <a href="https://github.com/ResoCoder/flutter-tdd-clean-architecture-course">here</a> and <a href="https://github.com/nanosoftonline/clean-flutter">here</a>), we tend to think of it in terms of folders and files which in reality doesn’t have any enforcement at all, and adding a dependency from a folder to another is just a matter of accessing the IDE actions and auto import the missing file which adds the famous import ‘file.dart’ at the start of the file.
+The ease of such an “import” mechanism is like having a tap that’s ready to be opened, at any time, for free, to add water to the big bull of mud we are forming.</p>
+
+<h2 id="the-toolbox-">The toolbox :</h2>
+<p>Flutter, or more concretely, dart, has many mechanisms that we can leverage in order to enforce our architecture and apply one of the above-mentioned techniques. We will also try to cover the pros/cons of each one, so we can choose the right one for our needs.</p>
+
+<p>For the sake of demo and simplicity, I create a <a href="https://github.com/karimkod/architecture_enforcement_in_flutter">simple/sample app</a> to query a question from the <a href="https://the-trivia-api.com/">Trivia API</a>.</p>
+
+<h3 id="1-the-single-file-case-">1. The single file case :</h3>
+<p>Since dart provides two access modifiers which are public and library private, then we can use that in order to control our architecture. The idea is to put all relevant parts of functionality in one file (which is by default one library) and only let the public what we need from our UI, this technique is compile-time enforcement.</p>
+
+<p>You can find the example <a href="https://github.com/karimkod/architecture_enforcement_in_flutter/blob/main/single_file_case/lib/trivia_quiz.dart">here</a>.</p>
+
+<p>In our case, we have a QuizzService which is a service that will contain different use cases, for now, it contains only one use case, “Get Random Question”. The only parts that we need public are the service and the Quizz Type. The other ones (like the repository interface and implementations) are all private.</p>
+
+<p><strong>Pros :</strong></p>
+
+<ol>
+  <li>Allow strict control of the public API: only the service and the domain model are exposed.</li>
+  <li>Cohesion is very high: since we bundled everything related to the functionality in one file, we have everything together (but this is both a blessing and a curse)</li>
+  <li>Simple structure: using the files makes it easier to navigate the project and the folder structure is very flat.</li>
+  <li>Fits a package (file, in this case) by feature design.</li>
+</ol>
+
+<p><strong>Cons :</strong></p>
+<ol>
+  <li>Maintainability/Readability: Having everything in one file may make it difficult to different code parts and may make the readability of the code suffer. Especially, if the file gets bigger and parts of it (like Database, or HTTP calls) get complicated or very low level. This can be solved by having multiple files with the “library/part/part of” features of dart that will allow us to create multiple files that are logically equivalent to the same file but these mechanisms are <a href="https://dart.dev/guides/libraries/create-library-packages#organizing-a-library-package">discouraged</a> by the dart team, and they are poorly documented anyway.</li>
+  <li>One-way protection: Although we have protected the UI from using the repository directly we don’t have that protection the other way around. So, our single file can still import a Widget (or any other type) and reference it without any warning/error.</li>
+  <li>Rigid:
+    <ul>
+      <li>For testing: it is difficult to perform a simple unit test without having <a href="https://enterprisecraftsmanship.com/posts/code-pollution/"> code pollution </a> ( _FakeRepository and testCompose()) And that’s a byproduct of our hard boundary. We may push toward having dependency injection, but this will defy the purpose of having everything in one file since we will break the hard boundary we set with the privacy mechanism. But if we can afford to have only integration tests, then that’s maybe fine. I tried to use the ‘library/part/part of’ keywords, but their functionality doesn’t seem to span the test folder — I couldn’t say for sure, since I couldn’t find any official documentation.</li>
+      <li>For extensibility and reusability: If we have code or logic we want to share across features then we are obliged to have everything in the same file or else create a duplication — the logic is not part of a public API —.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>I personally don’t favor this solution too much, for the different cons I mentioned above and I felt like fighting it in order to test it. and as I do TDD, I sometimes need the option to gear down and test logic in entities especially if it’s a complex logic (or logic that can create a combinatorial explosion if tested from a client class/code, etc.) But this is my opinion and different people have different <a href="https://www.christianfindlay.com/blog/test-isolation-expensive"> takes </a>, and there is always a <a href="https://www.youtube.com/watch?v=9imyW_WAYP4&amp;t=2018s"> trade-off between granularity and testability </a>.</p>
+
+<h3 id="2-package-and-analyze-">2. Package and Analyze :</h3>
+<p>This approach leverages the use of dart (or flutter) <a href="https://dart.dev/guides/libraries/create-library-packages"> packages </a> and <a href="https://dart.dev/guides/language/analysis-options"> dart static analyzer </a>. And as we will see shortly it can be either an automated check or a compile-time enforcement.</p>
+
+<p><em>The difference between dart and flutter packages is that the latter depends on flutter SDK and the former only depends on dart SDK. I tend to use dart packages whenever I have packages that don’t need any UI elements or types and only keep dependency from Flutter on the UI (usually, the main project) package.</em></p>
+
+<p>The idea of this approach is to create the flutter project and create several other packages to encapsulate what we want to package together, for example in the case of a clean architecture we can have a package by layer, like a core package, an infrastructure layer, etc. In the case of a vertical slice architecture, we can package by feature or package by a set of cohesive features.</p>
+
+<p>In our example, I have created a package called trivia_quiz that contains the logic and all the types related to getting a random question from Trivia API. The package also contains the related unit and contract tests.</p>
+
+<p>You can find the example <a href="https://github.com/karimkod/architecture_enforcement_in_flutter/tree/main/package_by_layer"> here </a>.</p>
+
+<p>Alongside the package organization, we can use a dart analyzer to enforce the import style and only allow import statements referencing the package and not single files inside the packages with relative file imports. As you can see in the analysis_options.yaml I have marked the two analyzer’s hints to be errors, this way I have a stronger alert when they happen. I also needed to enable always_use_package_importssince it’s not enabled in the imported flutter.yaml file. unlike the avoid_relative_lib_imports.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">include</span><span class="pi">:</span> <span class="s">package:flutter_lints/flutter.yaml</span>
+
+<span class="na">analyzer</span><span class="pi">:</span> 
+  <span class="na">errors</span><span class="pi">:</span> 
+    <span class="na">avoid_relative_lib_imports</span><span class="pi">:</span> <span class="s">error</span>
+    <span class="na">always_use_package_imports</span><span class="pi">:</span> <span class="s">error</span>
+
+<span class="na">linter</span><span class="pi">:</span>
+  <span class="na">rules</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">always_use_package_imports</span>
+</code></pre></div></div>
+<p>Now, if we have any dart-enabled IDE, or we run flutter analyze we can see the errors when we try to import something using a relative path, bypassing the public API of the package. (the <a href="https://dart.dev/guides/libraries/create-library-packages"> documentation </a> explains very well how the packages work, so I recommend reading it).</p>
+
+<p><img src="/assets/img/flutter-architecture-enforcement/1_4DUa0Me_tILnrxFQiCdYPQ.webp" alt=" error when trying to relatively import a file inside the src folder of a package." /></p>
+
+<p>It’s also possible to integrate flutter analyze in your CI pipeline in order to gatekeep commits/PR from violating the aforementioned rules.</p>
+
+<h4 id="where-to-create-the-package-">Where to create the package :</h4>
+<p>The behavior of this approach depends on where you put the packages you create:</p>
+
+<ol>
+  <li>Inside the flutter’s lib folder: This will raise the linter errors mentioned earlier (the case of the previous screenshot) but doesn’t force you to import the package in flutter’s pubspec.yml.</li>
+  <li>Outside the flutter’s lib folder: This will raise the linter errors mentioned as well as a compilation error and the project won’t compile at all, so you have a much stronger prevention from importing things you don’t want to import. And any package you need to use needs to be referenced in the pubspec.yml of the referencing package. The error triggered is the following :</li>
+</ol>
+
+<p><img src="/assets/img/flutter-architecture-enforcement/1_iEOyy_Huh59U4wUIz8Vm0Q.webp" alt="Compilation error when trying to access the file of a package relatively" /></p>
+
+<p><strong>Pros :</strong></p>
+
+<ul>
+  <li>Allow control of the public API: We can have as many files as we want in the package but we can pick which ones we want other packages to depend on using the export and show mechanism.</li>
+  <li>Control package dependencies: Since each package has its own pubspec.yaml we can control what each package depends on explicitly, and figuring out what the package uses is pretty easy.</li>
+  <li>Easier to maintain and extend: Having a full package with the source code and the test together makes it nicer and easier to maintain. And we don’t worry much about what to put public and private (at least inside a package).</li>
+  <li>Natural: compared to the single file solution, it feels more natural to work with packages to achieve enforcement.</li>
+</ul>
+
+<p><strong>Cons :</strong></p>
+
+<ul>
+  <li>Too many folders, too many files: The number of packages can create a complicated folder structure that can lead to difficulty to work on the project, especially when working on features that span multiple packages (but this depends on how we structure our packages).</li>
+  <li>Relying only on the linter errors: Linter errors are fake errors, they don’t prevent the app from compiling, so enforcing this will need a CI that runs the analyzer and gatekeep the commits that break the linter rules. But this depends on whether you choose i or ii options above.</li>
+</ul>
+
+<p>I personally favor this over the single file case and It’s my current way of working once the project starts to get a bigger codebase and a team starts growing. (really, when needed).</p>
+
+<h3 id="3-external-packages">3. External packages:</h3>
+<p>The approaches we discussed so far are native to the language and the framework. Alongside that, We can add extra layers of enforcement using external packages:</p>
+
+<p>1 — <a href="https://github.com/kawa1214/import-lint">import_lint</a>: this can be very practical in our use case since it provides lint rules to analyze imports in the codebase. From the README:</p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">analyzer</span><span class="pi">:</span>
+    <span class="na">plugins</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">import_lint</span>
+
+<span class="na">import_lint</span><span class="pi">:</span>
+    <span class="na">rules</span><span class="pi">:</span>
+        <span class="na">use_case_rule</span><span class="pi">:</span>
+            <span class="na">target_file_path</span><span class="pi">:</span> <span class="s2">"</span><span class="s">use_case/*_use_case.dart"</span>
+            <span class="na">not_allow_imports</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">use_case/*_use_case.dart"</span><span class="pi">]</span>
+            <span class="na">exclude_imports</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">use_case/base_use_case.dart"</span><span class="pi">]</span>
+        <span class="na">repository_rule</span><span class="pi">:</span>
+            <span class="na">target_file_path</span><span class="pi">:</span> <span class="s2">"</span><span class="s">repository/*_repository.dart"</span>
+            <span class="na">not_allow_imports</span><span class="pi">:</span>
+                <span class="pi">[</span>
+                    <span class="s2">"</span><span class="s">use_case/*_use_case.dart"</span><span class="pi">,</span>
+                    <span class="s2">"</span><span class="s">repository/*_repository.dart"</span><span class="pi">,</span>
+                    <span class="s2">"</span><span class="s">space</span><span class="se">\ </span><span class="s">test/*.dart"</span><span class="pi">,</span>
+                    <span class="s2">"</span><span class="s">repository/sub/**/*.dart"</span><span class="pi">,</span>
+                <span class="pi">]</span>
+            <span class="na">exclude_imports</span><span class="pi">:</span> <span class="pi">[]</span>
+        <span class="na">domain_rule</span><span class="pi">:</span>
+            <span class="na">target_file_path</span><span class="pi">:</span> <span class="s2">"</span><span class="s">domain/**/*_entity.dart"</span>
+            <span class="na">not_allow_imports</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">domain/*_entity.dart"</span><span class="pi">]</span>
+            <span class="na">exclude_imports</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">domain/base_entity.dart"</span><span class="pi">]</span>
+        <span class="na">package_rule</span><span class="pi">:</span>
+            <span class="na">target_file_path</span><span class="pi">:</span> <span class="s2">"</span><span class="s">**/*.dart"</span>
+            <span class="na">not_allow_imports</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">package:import_lint/import_lint.dart"</span><span class="pi">]</span>
+            <span class="na">exclude_imports</span><span class="pi">:</span> <span class="pi">[]</span>
+        <span class="na">core_package_rule</span><span class="pi">:</span>
+            <span class="na">target_file_path</span><span class="pi">:</span> <span class="s2">"</span><span class="s">package:core/**/*.dart"</span>
+            <span class="na">not_allow_imports</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">package:module/**/*.dart"</span><span class="pi">]</span>
+            <span class="na">exclude_imports</span><span class="pi">:</span> <span class="pi">[]</span>
+</code></pre></div></div>
+
+<p>This specifies which imports are not allowed not_allow_imports for the files that are included in the target path target_file_path.
+This package inherits what we said about the usage of the analyzer earlier but it offers more fine-grained control over the dependencies inside our codebase. The package looks maintained and it has 85% in popularity. I personally would use it if I needed it.</p>
+
+<p>2 — <a href="https://pub.dev/packages/dart_code_metrics">dart_code_metrics</a>: Although this is a general static analysis package, it provides a rule that may be of use to us, avoid-banned-imports and you can define the banned imports as follows :</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">dart_code_metrics</span><span class="pi">:</span>
+  <span class="na">rules</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">avoid-banned-imports</span><span class="pi">:</span>
+        <span class="na">entries</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">paths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">some/folder/.*</span><span class="err">\</span><span class="s">.dart"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">another/folder/.*</span><span class="err">\</span><span class="s">.dart"</span><span class="pi">]</span>
+          <span class="na">deny</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">package:flutter/material.dart"</span><span class="pi">]</span>
+          <span class="na">message</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Do</span><span class="nv"> </span><span class="s">not</span><span class="nv"> </span><span class="s">import</span><span class="nv"> </span><span class="s">Flutter</span><span class="nv"> </span><span class="s">Material</span><span class="nv"> </span><span class="s">Design</span><span class="nv"> </span><span class="s">library,</span><span class="nv"> </span><span class="s">we</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">not</span><span class="nv"> </span><span class="s">depend</span><span class="nv"> </span><span class="s">on</span><span class="nv"> </span><span class="s">it!"</span>
+        <span class="pi">-</span> <span class="na">paths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">core/.*</span><span class="err">\</span><span class="s">.dart"</span><span class="pi">]</span>
+          <span class="na">deny</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">package:flutter_bloc/flutter_bloc.dart"</span><span class="pi">]</span>
+          <span class="na">message</span><span class="pi">:</span> <span class="s1">'</span><span class="s">State</span><span class="nv"> </span><span class="s">management</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">not</span><span class="nv"> </span><span class="s">used</span><span class="nv"> </span><span class="s">inside</span><span class="nv"> </span><span class="s">"core"</span><span class="nv"> </span><span class="s">folder.'</span>
+</code></pre></div></div>
+
+<p>This package is also very popular and maintained, and it has other usages than only import banning. This can be of use if you already use this package in your projects and don’t want to depend on another static analysis package.</p>
+
+<p>3 — <a href="https://github.com/gustavo-hillesheim/dart_arch_test">dart_arch_test</a>: This package provides a testing toolset that allows you to build automated tests to define the dependency rules in your codebase. Like :</p>
+
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="s">'package:my_package/main.dart'</span><span class="o">;</span>
+<span class="kn">import</span> <span class="s">'package:arch_test/arch_test.dart'</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">archTest</span><span class="o">(</span><span class="n">classes</span><span class="o">.</span><span class="na">that</span>
+    <span class="o">.</span><span class="na">areInsideFolder</span><span class="o">(</span><span class="s">'entity'</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">should</span>
+    <span class="o">.</span><span class="na">extendClass</span><span class="o">&lt;</span><span class="n">BaseEntity</span><span class="o">&gt;(),</span>
+  <span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>Since this is an automated test, it can be integrated into the CI and it can be a strong indicator that we introduced a gap between our code and model.
+Unlike the first package, this one doesn’t look popular and it only targets Linux, macOS, and Windows (from what I can see in the <a href="https://pub.dev/packages/arch_test">pub.dev</a>), and that’s really a bummer for a flutter developer. And, looking at the repo I can see that there is a work in progress in some branches but not much activity.</p>
+
+<h2 id="closing-words-">Closing words :</h2>
+<p>I wrote this article to explore different techniques that a flutter dev or a team can adopt in order to enforce an architecture in a codebase. And also I got frustrated about how easy it was to just depend on something with an import statement that probably the IDE added and not have any error or warning when we break a dependency rule (<a href="https://stackoverflow.com/questions/74288334/is-there-a-way-to-prevent-importing-files-from-flutter-framework-in-dart">there is at least another person like me</a>).
+This may or may not be the case for everyone, some people prefer doing code reviews in order to keep the codebase in shape, but these are not an alternative to that but tools we can use alongside it.</p>
+
+<p>If you have read this far, then thank you, and let me know if I missed something or if you have achieved architecture enforcement in a different ways.</p>
+
+  </div><a class="u-url" href="/flutter/architecture/2023/02/24/architecture-enforcement-in-flutter-apps.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Abdelkrim.blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Abdelkrim Bourennane</li><li><a class="u-email" href="mailto:abdelkrim.bournane@gmail.com">abdelkrim.bournane@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/karimkod"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">karimkod</span></a></li><li><a href="https://instagram.com/codewkarim"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#instagram"></use></svg> <span class="username">codewkarim</span></a></li><li><a href="https://www.linkedin.com/in/abdelkrim-bournane"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">abdelkrim-bournane</span></a></li><li><a href="https://www.twitter.com/karimkos"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">karimkos</span></a></li><li><a href="https://youtube.com/%40codewkarim"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#youtube"></use></svg> <span class="username">@codewkarim</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

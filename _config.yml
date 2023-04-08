@@ -10,7 +10,13 @@ instagram_username: codewkarim
 linkedin_username: abdelkrim-bournane
 youtube_username: "@codewkarim"
 
+show_excerpts: true
+
+
 theme: minima
+
+disqus: 
+    shortname: abdelkrim-blog
 
 gem:
     - jekyll-seo-tag

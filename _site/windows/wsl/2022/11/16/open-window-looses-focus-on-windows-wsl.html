@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Open Window Loses Focus Issue on Windows, the Reason Is Wsl | Abdelkrim.blog</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Open Window Loses Focus Issue on Windows, the Reason Is Wsl" />
+<meta name="author" content="Abdelkrim Bourennane" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I had an issue that was very annoying and disturbing, and I didn’t notice it until I focused very well on it and had to diagnose it to find what’s the problem really is and find a solution (if we can call it that) to it." />
+<meta property="og:description" content="I had an issue that was very annoying and disturbing, and I didn’t notice it until I focused very well on it and had to diagnose it to find what’s the problem really is and find a solution (if we can call it that) to it." />
+<link rel="canonical" href="http://localhost:4000/windows/wsl/2022/11/16/open-window-looses-focus-on-windows-wsl.html" />
+<meta property="og:url" content="http://localhost:4000/windows/wsl/2022/11/16/open-window-looses-focus-on-windows-wsl.html" />
+<meta property="og:site_name" content="Abdelkrim.blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-11-16T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Open Window Loses Focus Issue on Windows, the Reason Is Wsl" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Abdelkrim Bourennane"},"dateModified":"2022-11-16T00:00:00+01:00","datePublished":"2022-11-16T00:00:00+01:00","description":"I had an issue that was very annoying and disturbing, and I didn’t notice it until I focused very well on it and had to diagnose it to find what’s the problem really is and find a solution (if we can call it that) to it.","headline":"Open Window Loses Focus Issue on Windows, the Reason Is Wsl","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/windows/wsl/2022/11/16/open-window-looses-focus-on-windows-wsl.html"},"url":"http://localhost:4000/windows/wsl/2022/11/16/open-window-looses-focus-on-windows-wsl.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Abdelkrim.blog" /><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon/favicon-16x16.png">
+<link rel="manifest" href="/assets/img/favicon/site.webmanifest">
+<link rel="mask-icon" href="/assets/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="/assets/img/favicon/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+  
+</head><body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Abdelkrim.blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/categories/">Categories</a><a class="page-link" href="/">Home</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header"><img src="/assets/img/windows-wsl-focus-issue/1_e43YYm_XZI-inn_0-g4K3w.webp" alt="Linux penguin on the windows os logo" class="featured-image-post" style="height: 350px; width: 100%; object-fit: cover;"><br/>
+    <h1 class="post-title p-name" itemprop="name headline">Open Window Loses Focus Issue on Windows, the Reason Is Wsl</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2022-11-16T00:00:00+01:00" itemprop="datePublished">Nov 16, 2022
+      </time>
+      <span class="post-categories">
+  
+  
+  <a href="/categories/#Windows">Windows</a>
+  &nbsp;
+  
+  <a href="/categories/#WSL">WSL</a>
+  
+  
+</span></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>I had an issue that was very annoying and disturbing, and I didn’t notice it until I focused very well on it and had to diagnose it to find what’s the problem really is and find a solution (if we can call it that) to it.</p>
+
+<h2 id="the-symptoms-">The symptoms :</h2>
+<p>Any window you are using will lose focus and if you were typing into it, you will lose the ability to do so until you take the mouse and click on it in order to be able to type again. And this happens frequently until it becomes really annoying. (Sorry, I got mad).</p>
+
+<h2 id="the-analysis-">The analysis :</h2>
+<p>After noticing the issue, I had to find a way to diagnose this and see why I was losing the window focus.</p>
+
+<p>I had the idea to see what window has focus or what window/program is taking focus temporarily. So, I <a href="https://stackoverflow.com/questions/46351885/how-to-grab-the-currently-active-foreground-window-in-powershell/70010344#70010344">found this PowerShell</a> script that prints the windows that currently have a focus in the console, and the good thing is that it runs continuously (while(1), who said infinite loops are bad).</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Add-Type</span><span class="w">  </span><span class="sh">@"
+using System;
+using System.Runtime.InteropServices;
+using System.Text;
+public class APIFuncs
+{
+    [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+    public static extern int GetWindowText(IntPtr hwnd,StringBuilder
+    lpString, int cch);
+    [DllImport("user32.dll", SetLastError=true, CharSet=CharSet.Auto)]
+    public static extern IntPtr GetForegroundWindow();
+    [DllImport("user32.dll", SetLastError=true, CharSet=CharSet.Auto)]
+    public static extern Int32 GetWindowThreadProcessId(IntPtr hWnd,out
+    Int32 lpdwProcessId);
+    [DllImport("user32.dll", SetLastError=true, CharSet=CharSet.Auto)]
+    public static extern Int32 GetWindowTextLength(IntPtr hWnd);
+}
+"@</span><span class="w">
+
+</span><span class="kr">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w">
+</span><span class="p">{</span><span class="w">
+    </span><span class="nv">$w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">apifuncs</span><span class="p">]::</span><span class="n">GetForegroundWindow</span><span class="p">()</span><span class="w">
+    </span><span class="nv">$len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">apifuncs</span><span class="p">]::</span><span class="n">GetWindowTextLength</span><span class="p">(</span><span class="nv">$w</span><span class="p">)</span><span class="w">
+    </span><span class="nv">$sb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">New-Object</span><span class="w"> </span><span class="nx">text.stringbuilder</span><span class="w"> </span><span class="nt">-ArgumentList</span><span class="w"> </span><span class="p">(</span><span class="nv">$len</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
+    </span><span class="nv">$rtnlen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">apifuncs</span><span class="p">]::</span><span class="n">GetWindowText</span><span class="p">(</span><span class="nv">$w</span><span class="p">,</span><span class="nv">$sb</span><span class="p">,</span><span class="nv">$sb</span><span class="o">.</span><span class="nf">Capacity</span><span class="p">)</span><span class="w">
+    </span><span class="n">write-host</span><span class="w"> </span><span class="s2">"Window Title: </span><span class="si">$(</span><span class="nv">$sb</span><span class="o">.</span><span class="nf">tostring</span><span class="p">()</span><span class="si">)</span><span class="s2">"</span><span class="w">
+    </span><span class="n">sleep</span><span class="w"> </span><span class="nx">1</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>The result was the following :</p>
+
+<p><img src="/assets/img/windows-wsl-focus-issue/1_kAwWQ0JgpgYHLRbRAZ36zQ.webp" alt="An output of the powershell script" /></p>
+
+<p>As you can see, this “RemoteApp” is taking over the focus from my “Google Chrome” Browser.</p>
+
+<p>And after a couple of Google searches, I found out that this app is the Windows Remote Desktop Connection (RDP) app.</p>
+
+<p>So, I opened the process explorer (you can find it and install it <a href="https://learn.microsoft.com/en-us/sysinternals/downloads/process-explorer">here</a>) This is a verbose and detailed alternative for Windows Task Manager. I filtered by the name of the RDP process, which is (mstsc.exe). And found this :</p>
+
+<p><img src="/assets/img/windows-wsl-focus-issue/1_S505ppO_Y4g7o2YF0Lmd8w.webp" alt="screenshot of the search" /></p>
+
+<p>I was worried because I thought maybe someone has access to my computer over RDP. So, I check the <a href="https://www.anyviewer.com/how-to/view-connection-history-remote-desktop-windows-10-2578.html">history of RDP</a> connections in my PC and it was empty, then I checked if <a href="https://www.anyviewer.com/how-to/how-to-check-if-remote-desktop-is-enabled-0007.html">RDP was even enabled on my PC</a> but found nothing as well.</p>
+
+<p>So, I figured that if you double-click on the process in Process Explorer you can see what command line launched the process, and here was the Eureka moment.</p>
+
+<p><img src="/assets/img/windows-wsl-focus-issue/1_AIsDrLcne7G9YhjYyqen5Q.webp" alt="The details of the RDP" /></p>
+
+<p>It was WSL (Windows Subsytem of linux, which I personally need to dev) and I have various tools that need WSL, like Docker.</p>
+
+<p>I didn’t do any further research on why WSL needs an RDP connection, but it was stealing my focus (literally). Found other people complaining about the same problem. (like <a href="https://youtrack.jetbrains.com/issue/IDEA-282196/Constant-loss-of-editor-focus-when-using-Windows-11-and-WSL">here</a>, the last comment states that it has nothing to do with any JetBrains tools which I confirm, it’s not a JetBrains issue, I use Rider and IntelliJ.)</p>
+
+<h2 id="the-solution">The solution</h2>
+<p>I couldn’t find anything useful or a reasonable fix apart from restarting WSL using a command line to shut it down (be careful, if you have apps using WSL this will kill them or make them misbehave):</p>
+
+<p><code class="language-plaintext highlighter-rouge">wsl --shutdown</code></p>
+
+<p>you can run the following command to make sure all WSL are shut down :</p>
+
+<p><code class="language-plaintext highlighter-rouge">wsl --list --verbose</code></p>
+
+<p>And then run the following to restart it (or restart any app that uses it, it will launch it automatically) :</p>
+
+<p><code class="language-plaintext highlighter-rouge">wsl</code></p>
+
+<p>Thanks for reading this far, this was a quick post that maybe will help someone in the future. If you know a fix that I couldn’t find or have an insight about this issue, please put it in a comment or reach out to me, I can add it to this post with credits (of course!).</p>
+
+  </div><a class="u-url" href="/windows/wsl/2022/11/16/open-window-looses-focus-on-windows-wsl.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Abdelkrim.blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Abdelkrim Bourennane</li><li><a class="u-email" href="mailto:abdelkrim.bournane@gmail.com">abdelkrim.bournane@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/karimkod"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">karimkod</span></a></li><li><a href="https://instagram.com/codewkarim"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#instagram"></use></svg> <span class="username">codewkarim</span></a></li><li><a href="https://www.linkedin.com/in/abdelkrim-bournane"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">abdelkrim-bournane</span></a></li><li><a href="https://www.twitter.com/karimkos"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">karimkos</span></a></li><li><a href="https://youtube.com/%40codewkarim"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#youtube"></use></svg> <span class="username">@codewkarim</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

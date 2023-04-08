@@ -3,6 +3,7 @@ title: Toolbox For Porting Your Flutter Mobile Application to The Web
 categories: Flutter
 featured_image: /assets/img/flutter-web-portability/1_gnHqSRM2dV50E7xAoe1Lew.webp
 featured_image_alt: An illustration of porting a flutter mobile app to the web
+comments: true
 ---
 
 Since Google announced that Flutter web is stable starting from v2.0.0, a lot of business and application owners wanted to have a version of their already developed Flutter application ported to the web, since the web is easily accessible and Progressive Web Applications (PWA) offer an experience close to native apps.
