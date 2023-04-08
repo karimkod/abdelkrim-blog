@@ -1,7 +1,9 @@
-title: Abdelkrim's Blog
+title: Abdelkrim.blog
 author: Abdelkrim Bourennane
 email: "abdelkrim.bournane@gmail.com"
-  
+
+url: "https://abdelkrim.blog"
+
 twitter_username: karimkos
 github_username:  karimkod
 instagram_username: codewkarim
@@ -9,3 +11,6 @@ linkedin_username: abdelkrim-bournane
 youtube_username: "@codewkarim"
 
 theme: minima
+
+gem:
+    - jekyll-seo-tag
