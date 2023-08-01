@@ -7,18 +7,25 @@ comments: true
 ---
 
 As a strong believe in the effectivness of mentoring, I have always had a preference for environment where I can find access to direct mentoring. doing so, can shape one's carreer rapidly by avoiding learning detours and taking right shortcuts.
+
 Becoming a good software engineer is a pathway that have been taken many, many, many (put as many manies as you like) times before, and ignoring that or thinking otherwise is really foolish and non-strategic in many ways.
 
 # Who Is a Direct Mentor?
 The direct mentor, is any person that is in consistent contact with you, who is overlooking your work and professional decision, and is providing consistent feedback and direction on them.
+
 Typically, this can be a friend (peer mentor), a co-worker, a career adviser, or any person that you knew or approached specifically for mentoring.
+
 It goes without saying, that choosing the right mentor is crucial. This is not only limited to the mentoring skill but also, to the attitude, strategy, and technical skills. Knowing the level of influence that the mentor can have on our carrer, on can only imagine how damaging it can be to have a bad one.
+
 Unfortunetly, for some of us and for different reasons, it is difficult, nay impossible, to have a direct mentor.
 
 # Enter Indirect Mentoring
 At the current state of the ecosystem, we can mitigate the absence of a direct mentor by seeking refuge in indirect mentoring.
+
 Indirect mentoring, is looking for remote people that are really good in our subject, and let them be our mentors without them knowing (not in the creepy sense). This means, learning from them by following their work and publications.
+
 This concept, is really powerful and, if used properly, it can be revealing and eye-opening.
+
 There exist many ways to designate someone as an indirect mentor, and an unordered list is in order to list a few ways that I have personally used and found beneficial (see what I did there) :
  - Reading their books: To fully know their philosophy, a book might be a very good and detailed medium and sometimes this is the only viable option, when we want to learn from authors who are no longer with us.
  - Watching their lectures and/or conferences.
