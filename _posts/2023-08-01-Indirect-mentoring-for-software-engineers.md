@@ -1,7 +1,9 @@
 ---
-title: Indirect Mentoring for Software Engineers 
+title: Indirect Mentoring for Software Engineers
+description: Explore the powerful impact of indirect mentoring on the growth of software engineering careers. Learn how subtle influences, diverse role models, and shared experiences contribute to professional development. Join me in uncovering the hidden potential of indirect mentoring as a catalyst for expanding your skills, perspectives, and opportunities in the dynamic world of software engineering.
 categories: Miscellaneous
 featured_image: assets/img/remote-mentoring-for-software-engineers/mentoring.jpeg
+image: assets/img/remote-mentoring-for-software-engineers/mentoring.jpeg
 featured_image_alt: a mentoring illustration, of a man helping another to go upstairs 
 comments: true
 ---

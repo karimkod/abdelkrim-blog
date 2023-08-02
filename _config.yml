@@ -1,5 +1,8 @@
 title: Abdelkrim.blog
+tagline: Personal Tech Blog
+description: Join me on a journey through software architecture, design, and engineering, as we delve into the world of programming, coding, C#, .NET, Flutter, and Dart. Learn about effective project management and discover ways to nurture your software engineering career. Let's explore together the ins and outs of building great software while sharing insights and tips for personal growth.
 author: Abdelkrim Bourennane
+locale: en_US
 email: "abdelkrim.bournane@gmail.com"
 
 url: "https://abdelkrim.blog"

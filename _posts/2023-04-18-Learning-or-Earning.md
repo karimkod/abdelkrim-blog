@@ -1,7 +1,9 @@
 ---
 title: A Learning or an Earning Project
+description: Dive into the world of personal software projects and explore the distinctions between those aimed at learning and earning. Gain insights into the importance of differentiating between these two paths and discover strategies for navigating both. Join me as we navigate the landscape of software programming, uncovering the nuances that can shape the success of your projects and your growth as a developer. 
 categories: Miscellaneous
 featured_image: /assets/img/learning-or-earning/learn-or-earn-project.png
+image: /assets/img/learning-or-earning/learn-or-earn-project.png
 featured_image_alt: An illustration of library containing money
 comments: true
 ---

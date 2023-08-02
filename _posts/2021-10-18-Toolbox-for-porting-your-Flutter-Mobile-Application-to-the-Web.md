@@ -1,7 +1,9 @@
 ---
 title: Toolbox For Porting Your Flutter Mobile Application to The Web
+description: Unlock the potential of your Flutter mobile app on the web. Dive into the techniques and best practices of seamlessly porting your Flutter app to the web using Dart. Explore the intricacies of adapting UI components, optimizing performance, and ensuring a consistent user experience. Join me as we bridge the gap between mobile and web, harnessing the power of Flutter and Dart to extend your app's reach and impact. 
 categories: Flutter
 featured_image: /assets/img/flutter-web-portability/1_gnHqSRM2dV50E7xAoe1Lew.webp
+image: /assets/img/flutter-web-portability/1_gnHqSRM2dV50E7xAoe1Lew.webp
 featured_image_alt: An illustration of porting a flutter mobile app to the web
 comments: true
 ---
