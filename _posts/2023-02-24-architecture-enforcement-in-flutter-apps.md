@@ -1,7 +1,9 @@
 ---
 title: Architecture Enforcement in Flutter Apps
+description: Explore the synergy of Flutter and Dart in enforcing software architecture. Discover how strategic testing, rigorous static code analysis, and modular design converge to uphold your architectural vision. Learn to scale your project without compromising design integrity, fostering a robust codebase. Join me in mastering sustainable software architecture with Flutter and Dart, empowering your applications to thrive and evolve effectively.x 
 categories: Flutter Architecture
 featured_image: /assets/img/flutter-architecture-enforcement/1_PmCTmD9tHFD8L2nEVxg4PA.webp
+image: /assets/img/flutter-architecture-enforcement/1_PmCTmD9tHFD8L2nEVxg4PA.webp
 featured_image_alt: AI generated picture of a butterfly with gloden wings futuristc 
 comments: true
 
