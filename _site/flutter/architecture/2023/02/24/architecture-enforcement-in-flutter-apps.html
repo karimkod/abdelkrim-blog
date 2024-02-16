@@ -8,17 +8,19 @@
 <meta property="og:title" content="Architecture Enforcement in Flutter Apps" />
 <meta name="author" content="Abdelkrim Bourennane" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="When we start writing a Flutter application (or any other language/framework for this matter), we always have an architecture in mind that we want our code to respect and follow. Different architectural styles have different objectives and each buys you different options. However, when the project gets bigger and more coding hands are involved, the code can go astray, and we start diverging from our desired architecture (excluding, the case when the architecture itself shifts as part of an evolutionary design). This phenomenon is known as a model-code gap :" />
-<meta property="og:description" content="When we start writing a Flutter application (or any other language/framework for this matter), we always have an architecture in mind that we want our code to respect and follow. Different architectural styles have different objectives and each buys you different options. However, when the project gets bigger and more coding hands are involved, the code can go astray, and we start diverging from our desired architecture (excluding, the case when the architecture itself shifts as part of an evolutionary design). This phenomenon is known as a model-code gap :" />
+<meta name="description" content="Explore the synergy of Flutter and Dart in enforcing software architecture. Discover how strategic testing, rigorous static code analysis, and modular design converge to uphold your architectural vision. Learn to scale your project without compromising design integrity, fostering a robust codebase. Join me in mastering sustainable software architecture with Flutter and Dart, empowering your applications to thrive and evolve effectively.x" />
+<meta property="og:description" content="Explore the synergy of Flutter and Dart in enforcing software architecture. Discover how strategic testing, rigorous static code analysis, and modular design converge to uphold your architectural vision. Learn to scale your project without compromising design integrity, fostering a robust codebase. Join me in mastering sustainable software architecture with Flutter and Dart, empowering your applications to thrive and evolve effectively.x" />
 <link rel="canonical" href="http://localhost:4000/flutter/architecture/2023/02/24/architecture-enforcement-in-flutter-apps.html" />
 <meta property="og:url" content="http://localhost:4000/flutter/architecture/2023/02/24/architecture-enforcement-in-flutter-apps.html" />
 <meta property="og:site_name" content="Abdelkrim.blog" />
+<meta property="og:image" content="http://localhost:4000/assets/img/flutter-architecture-enforcement/1_PmCTmD9tHFD8L2nEVxg4PA.webp" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2023-02-24T00:00:00+01:00" />
-<meta name="twitter:card" content="summary" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="http://localhost:4000/assets/img/flutter-architecture-enforcement/1_PmCTmD9tHFD8L2nEVxg4PA.webp" />
 <meta property="twitter:title" content="Architecture Enforcement in Flutter Apps" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Abdelkrim Bourennane"},"dateModified":"2023-02-24T00:00:00+01:00","datePublished":"2023-02-24T00:00:00+01:00","description":"When we start writing a Flutter application (or any other language/framework for this matter), we always have an architecture in mind that we want our code to respect and follow. Different architectural styles have different objectives and each buys you different options. However, when the project gets bigger and more coding hands are involved, the code can go astray, and we start diverging from our desired architecture (excluding, the case when the architecture itself shifts as part of an evolutionary design). This phenomenon is known as a model-code gap :","headline":"Architecture Enforcement in Flutter Apps","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/flutter/architecture/2023/02/24/architecture-enforcement-in-flutter-apps.html"},"url":"http://localhost:4000/flutter/architecture/2023/02/24/architecture-enforcement-in-flutter-apps.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Abdelkrim Bourennane"},"dateModified":"2023-02-24T00:00:00+01:00","datePublished":"2023-02-24T00:00:00+01:00","description":"Explore the synergy of Flutter and Dart in enforcing software architecture. Discover how strategic testing, rigorous static code analysis, and modular design converge to uphold your architectural vision. Learn to scale your project without compromising design integrity, fostering a robust codebase. Join me in mastering sustainable software architecture with Flutter and Dart, empowering your applications to thrive and evolve effectively.x","headline":"Architecture Enforcement in Flutter Apps","image":"http://localhost:4000/assets/img/flutter-architecture-enforcement/1_PmCTmD9tHFD8L2nEVxg4PA.webp","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/flutter/architecture/2023/02/24/architecture-enforcement-in-flutter-apps.html"},"url":"http://localhost:4000/flutter/architecture/2023/02/24/architecture-enforcement-in-flutter-apps.html"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Abdelkrim.blog" /><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon/favicon-32x32.png">
@@ -35,6 +37,16 @@
     <meta name="twitter:image" content="http://localhost:4000/assets/img/flutter-architecture-enforcement/1_PmCTmD9tHFD8L2nEVxg4PA.webp" />
   
   
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3PRFJF46SQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3PRFJF46SQ');
+</script>
+
 </head><body><header class="site-header" role="banner">
 
   <div class="wrapper"><a class="site-title" rel="author" href="/">Abdelkrim.blog</a><nav class="site-nav">
@@ -76,7 +88,7 @@
 However, when the project gets bigger and more coding hands are involved, the code can go astray, and we start diverging from our desired architecture (excluding, the case when the architecture itself shifts as part of an evolutionary design). This phenomenon is known as a <a href="https://www.georgefairbanks.com/software-architecture/model-code-gap/">model-code gap</a> :</p>
 
 <blockquote>
-  <p>The model code gap is an idea from George Fairbanks’s book “<a href="https://www.georgefairbanks.com/book/">Just enough software architecture.</a>” It describes the conceptual gap between the abstractions we use to discuss software architecture (a model) and the reality of the executed source code. — <a href="https://icepanel.io/blog/2022-11-30-the-model-code-gap">From The model code gap \ IcePanel Blog</a></p>
+  <p>The model code gap is an idea from George Fairbanks’s book “<a href="https://www.georgefairbanks.com/book/">Just Enough Software Architecture.</a>” It describes the conceptual gap between the abstractions we use to discuss software architecture (a model) and the reality of the executed source code. — <a href="https://icepanel.io/blog/2022-11-30-the-model-code-gap">From The model code gap \ IcePanel Blog</a></p>
 </blockquote>
 
 <p>To remediate the model-code gap, we have several tools and techniques that we can use to “<a href="https://www.kamilgrzybek.com/blog/posts/modular-monolith-architecture-enforcement">Enforce the architecture</a>” (I recommend reading the article as it goes into details about Architecture enforcement). These tools can be summarized from faster and limited, to slower and flexible, as follows:</p>
@@ -84,10 +96,10 @@ However, when the project gets bigger and more coding hands are involved, the co
 <ol>
   <li><strong>Compile time enforcement:</strong> This category contains everything that we have in the language that allows us to enforce encapsulation, packaging, and dependency rules and directions. (e.g.: private vs. public fields, package dependencies, etc.).</li>
   <li><strong>Automated checks:</strong> This includes extra configuration or extra code that we use specifically to allow/forbid certain things to be done in our codebase. Static code analysis technique is part of this category and in some ecosystems, we can write tests for the architecture of the code by using tools like <a href="https://archunitnet.readthedocs.io/en/latest/">ArchUnitNET</a></li>
-  <li><strong>Code Review:</strong> This involves the human factor, either with pair programming or asynchronous code reviews in order to “manually” check that the architecture is respected and that the code adheres to the desired design that’s probably has been documented in an <a href="https://adr.github.io/">Architectural Decision Record</a>.</li>
+  <li><strong>Code Review:</strong> This involves the human factor, either with pair programming or asynchronous code reviews to “manually” check that the architecture is respected and that the code adheres to the desired design that’s probably has been documented in an <a href="https://adr.github.io/">Architectural Decision Record</a>.</li>
 </ol>
 
-<p>Theory aside, when it comes to the code, the architecture is not boxes, nor arrows. It’s which parts of the code are together (cohesion) and who is calling it (coupling). So, enforcing the architecture boils down to putting the code in the desired place and allowing it to be called from where we want it to be called. And this article tries to go through what we have in our hands as flutter developers in order to achieve that.</p>
+<p>Theory aside, when it comes to the code, the architecture is not boxes, nor arrows. It’s which parts of the code are together (cohesion) and who is calling it (coupling). So, enforcing the architecture boils down to putting the code in the desired place and allowing it to be called from where we want it to be called. This article tries to go through what we have in our hands as flutter developers to achieve that.</p>
 
 <h1 id="the-flutter-case">The Flutter case:</h1>
 <h2 id="motivation-">Motivation :</h2>
@@ -95,18 +107,18 @@ However, when the project gets bigger and more coding hands are involved, the co
 The ease of such an “import” mechanism is like having a tap that’s ready to be opened, at any time, for free, to add water to the big bull of mud we are forming.</p>
 
 <h2 id="the-toolbox-">The toolbox :</h2>
-<p>Flutter, or more concretely, dart, has many mechanisms that we can leverage in order to enforce our architecture and apply one of the above-mentioned techniques. We will also try to cover the pros/cons of each one, so we can choose the right one for our needs.</p>
+<p>Flutter, or more concretely, dart, has many mechanisms that we can leverage to enforce our architecture and apply one of the above-mentioned techniques. We will also try to cover the pros/cons of each one, so we can choose the right one for our needs.</p>
 
 <p>For the sake of demo and simplicity, I create a <a href="https://github.com/karimkod/architecture_enforcement_in_flutter">simple/sample app</a> to query a question from the <a href="https://the-trivia-api.com/">Trivia API</a>.</p>
 
 <h3 id="1-the-single-file-case-">1. The single file case :</h3>
-<p>Since dart provides two access modifiers which are public and library private, then we can use that in order to control our architecture. The idea is to put all relevant parts of functionality in one file (which is by default one library) and only let the public what we need from our UI, this technique is compile-time enforcement.</p>
+<p>Since Dart provides two access modifiers which are public and library private, then we can use that to control our architecture. The idea is to put all relevant parts of functionality in one file (which is by default one library) and only let the public what we need from our UI, this technique is compile-time enforcement.</p>
 
 <p>You can find the example <a href="https://github.com/karimkod/architecture_enforcement_in_flutter/blob/main/single_file_case/lib/trivia_quiz.dart">here</a>.</p>
 
-<p>In our case, we have a QuizzService which is a service that will contain different use cases, for now, it contains only one use case, “Get Random Question”. The only parts that we need public are the service and the Quizz Type. The other ones (like the repository interface and implementations) are all private.</p>
+<p>In our case, we have a QuizzService which is a service that will contain different use cases, for now, it contains only one use case, “Get Random Question”. The only parts that we need public are the service and the Quiz Type. The other ones (like the repository interface and implementations) are all private.</p>
 
-<p><strong>Pros :</strong></p>
+<p><strong>Pros:</strong></p>
 
 <ol>
   <li>Allow strict control of the public API: only the service and the domain model are exposed.</li>
@@ -115,9 +127,9 @@ The ease of such an “import” mechanism is like having a tap that’s ready t
   <li>Fits a package (file, in this case) by feature design.</li>
 </ol>
 
-<p><strong>Cons :</strong></p>
+<p><strong>Cons:</strong></p>
 <ol>
-  <li>Maintainability/Readability: Having everything in one file may make it difficult to different code parts and may make the readability of the code suffer. Especially, if the file gets bigger and parts of it (like Database, or HTTP calls) get complicated or very low level. This can be solved by having multiple files with the “library/part/part of” features of dart that will allow us to create multiple files that are logically equivalent to the same file but these mechanisms are <a href="https://dart.dev/guides/libraries/create-library-packages#organizing-a-library-package">discouraged</a> by the dart team, and they are poorly documented anyway.</li>
+  <li>Maintainability/Readability: Having everything in one file may make it difficult to different code parts and may make the readability of the code suffer. Especially, if the file gets bigger and parts of it (like Database, or HTTP calls) get complicated or very low level. This can be solved by having multiple files with the “library/part/part of” features of Dart that will allow us to create multiple files that are logically equivalent to the same file but these mechanisms are <a href="https://dart.dev/guides/libraries/create-library-packages#organizing-a-library-package">discouraged</a> by the dart team, and they are poorly documented anyway.</li>
   <li>One-way protection: Although we have protected the UI from using the repository directly we don’t have that protection the other way around. So, our single file can still import a Widget (or any other type) and reference it without any warning/error.</li>
   <li>Rigid:
     <ul>
@@ -127,7 +139,7 @@ The ease of such an “import” mechanism is like having a tap that’s ready t
   </li>
 </ol>
 
-<p>I personally don’t favor this solution too much, for the different cons I mentioned above and I felt like fighting it in order to test it. and as I do TDD, I sometimes need the option to gear down and test logic in entities especially if it’s a complex logic (or logic that can create a combinatorial explosion if tested from a client class/code, etc.) But this is my opinion and different people have different <a href="https://www.christianfindlay.com/blog/test-isolation-expensive"> takes </a>, and there is always a <a href="https://www.youtube.com/watch?v=9imyW_WAYP4&amp;t=2018s"> trade-off between granularity and testability </a>.</p>
+<p>I don’t favor this solution too much, for the different cons I mentioned above and I felt like fighting it in order to test it. and as I do TDD, I sometimes need the option to gear down and test logic in entities especially if it’s a complex logic (or logic that can create a combinatorial explosion if tested from a client class/code, etc.) But this is my opinion and different people have different <a href="https://www.christianfindlay.com/blog/test-isolation-expensive"> takes </a>, and there is always a <a href="https://www.youtube.com/watch?v=9imyW_WAYP4&amp;t=2018s"> trade-off between granularity and testability </a>.</p>
 
 <h3 id="2-package-and-analyze-">2. Package and Analyze :</h3>
 <p>This approach leverages the use of dart (or flutter) <a href="https://dart.dev/guides/libraries/create-library-packages"> packages </a> and <a href="https://dart.dev/guides/language/analysis-options"> dart static analyzer </a>. And as we will see shortly it can be either an automated check or a compile-time enforcement.</p>
@@ -153,11 +165,11 @@ The ease of such an “import” mechanism is like having a tap that’s ready t
   <span class="na">rules</span><span class="pi">:</span>
     <span class="pi">-</span> <span class="s">always_use_package_imports</span>
 </code></pre></div></div>
-<p>Now, if we have any dart-enabled IDE, or we run flutter analyze we can see the errors when we try to import something using a relative path, bypassing the public API of the package. (the <a href="https://dart.dev/guides/libraries/create-library-packages"> documentation </a> explains very well how the packages work, so I recommend reading it).</p>
+<p>Now, if we have any dart-enabled IDE, or we run <code class="language-plaintext highlighter-rouge">flutter analyze</code> we can see the errors when we try to import something using a relative path, bypassing the public API of the package. (the <a href="https://dart.dev/guides/libraries/create-library-packages"> documentation </a> explains very well how the packages work, so I recommend reading it).</p>
 
 <p><img src="/assets/img/flutter-architecture-enforcement/1_4DUa0Me_tILnrxFQiCdYPQ.webp" alt=" error when trying to relatively import a file inside the src folder of a package." /></p>
 
-<p>It’s also possible to integrate flutter analyze in your CI pipeline in order to gatekeep commits/PR from violating the aforementioned rules.</p>
+<p>It’s also possible to integrate <code class="language-plaintext highlighter-rouge">flutter analyze</code> in your CI pipeline to gatekeep commits/PR from violating the aforementioned rules.</p>
 
 <h4 id="where-to-create-the-package-">Where to create the package :</h4>
 <p>The behavior of this approach depends on where you put the packages you create:</p>
@@ -169,11 +181,11 @@ The ease of such an “import” mechanism is like having a tap that’s ready t
 
 <p><img src="/assets/img/flutter-architecture-enforcement/1_iEOyy_Huh59U4wUIz8Vm0Q.webp" alt="Compilation error when trying to access the file of a package relatively" /></p>
 
-<p><strong>Pros :</strong></p>
+<p><strong>Pros:</strong></p>
 
 <ul>
   <li>Allow control of the public API: We can have as many files as we want in the package but we can pick which ones we want other packages to depend on using the export and show mechanism.</li>
-  <li>Control package dependencies: Since each package has its own pubspec.yaml we can control what each package depends on explicitly, and figuring out what the package uses is pretty easy.</li>
+  <li>Control package dependencies: Since each package has its pubspec.yaml we can control what each package depends on explicitly, and figuring out what the package uses is pretty easy.</li>
   <li>Easier to maintain and extend: Having a full package with the source code and the test together makes it nicer and easier to maintain. And we don’t worry much about what to put public and private (at least inside a package).</li>
   <li>Natural: compared to the single file solution, it feels more natural to work with packages to achieve enforcement.</li>
 </ul>
@@ -181,11 +193,11 @@ The ease of such an “import” mechanism is like having a tap that’s ready t
 <p><strong>Cons :</strong></p>
 
 <ul>
-  <li>Too many folders, too many files: The number of packages can create a complicated folder structure that can lead to difficulty to work on the project, especially when working on features that span multiple packages (but this depends on how we structure our packages).</li>
-  <li>Relying only on the linter errors: Linter errors are fake errors, they don’t prevent the app from compiling, so enforcing this will need a CI that runs the analyzer and gatekeep the commits that break the linter rules. But this depends on whether you choose i or ii options above.</li>
+  <li>Too many folders, too many files: The number of packages can create a complicated folder structure that can lead to difficulty in working on the project, especially when working on features that span multiple packages (but this depends on how we structure our packages).</li>
+  <li>Relying only on the linter errors: Linter errors are fake errors, they don’t prevent the app from compiling, so enforcing this will need a CI that runs the analyzer and gatekeeps the commits that break the linter rules. But this depends on whether you choose the i or ii options above.</li>
 </ul>
 
-<p>I personally favor this over the single file case and It’s my current way of working once the project starts to get a bigger codebase and a team starts growing. (really, when needed).</p>
+<p>I favor this over the single file case and It’s my current way of working once the project starts to get a bigger codebase and a team starts growing. (really, when needed).</p>
 
 <h3 id="3-external-packages">3. External packages:</h3>
 <p>The approaches we discussed so far are native to the language and the framework. Alongside that, We can add extra layers of enforcement using external packages:</p>
@@ -226,7 +238,7 @@ The ease of such an “import” mechanism is like having a tap that’s ready t
 </code></pre></div></div>
 
 <p>This specifies which imports are not allowed not_allow_imports for the files that are included in the target path target_file_path.
-This package inherits what we said about the usage of the analyzer earlier but it offers more fine-grained control over the dependencies inside our codebase. The package looks maintained and it has 85% in popularity. I personally would use it if I needed it.</p>
+This package inherits what we said about the usage of the analyzer earlier but it offers more fine-grained control over the dependencies inside our codebase. The package looks maintained and it has 85% in popularity. I would use it if I needed it.</p>
 
 <p>2 — <a href="https://pub.dev/packages/dart_code_metrics">dart_code_metrics</a>: Although this is a general static analysis package, it provides a rule that may be of use to us, avoid-banned-imports and you can define the banned imports as follows :</p>
 
@@ -259,13 +271,13 @@ This package inherits what we said about the usage of the analyzer earlier but i
 </code></pre></div></div>
 
 <p>Since this is an automated test, it can be integrated into the CI and it can be a strong indicator that we introduced a gap between our code and model.
-Unlike the first package, this one doesn’t look popular and it only targets Linux, macOS, and Windows (from what I can see in the <a href="https://pub.dev/packages/arch_test">pub.dev</a>), and that’s really a bummer for a flutter developer. And, looking at the repo I can see that there is a work in progress in some branches but not much activity.</p>
+Unlike the first package, this one doesn’t look popular and it only targets Linux, macOS, and Windows (from what I can see in the <a href="https://pub.dev/packages/arch_test">pub.dev</a>), and that’s a bummer for a flutter developer. And, looking at the repo I can see that there is a work in progress in some branches but not much activity.</p>
 
 <h2 id="closing-words-">Closing words :</h2>
-<p>I wrote this article to explore different techniques that a flutter dev or a team can adopt in order to enforce an architecture in a codebase. And also I got frustrated about how easy it was to just depend on something with an import statement that probably the IDE added and not have any error or warning when we break a dependency rule (<a href="https://stackoverflow.com/questions/74288334/is-there-a-way-to-prevent-importing-files-from-flutter-framework-in-dart">there is at least another person like me</a>).
+<p>I wrote this article to explore different techniques that a Flutter dev or a team can adopt to enforce an architecture in a codebase. Also I got frustrated about how easy it was to just depend on something with an import statement that probably the IDE added and not have any error or warning when we break a dependency rule (<a href="https://stackoverflow.com/questions/74288334/is-there-a-way-to-prevent-importing-files-from-flutter-framework-in-dart">there is at least another person like me</a>).
 This may or may not be the case for everyone, some people prefer doing code reviews in order to keep the codebase in shape, but these are not an alternative to that but tools we can use alongside it.</p>
 
-<p>If you have read this far, then thank you, and let me know if I missed something or if you have achieved architecture enforcement in a different ways.</p>
+<p>If you have read this far, then thank you, and let me know if I missed something or if you have achieved architecture enforcement in different ways.</p>
 
   </div><a class="u-url" href="/flutter/architecture/2023/02/24/architecture-enforcement-in-flutter-apps.html" hidden></a>
 </article>
@@ -283,11 +295,11 @@ This may or may not be the case for everyone, some people prefer doing code revi
           <li class="p-name">Abdelkrim Bourennane</li><li><a class="u-email" href="mailto:abdelkrim.bournane@gmail.com">abdelkrim.bournane@gmail.com</a></li></ul>
       </div>
 
-      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/karimkod"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">karimkod</span></a></li><li><a href="https://instagram.com/codewkarim"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#instagram"></use></svg> <span class="username">codewkarim</span></a></li><li><a href="https://www.linkedin.com/in/abdelkrim-bournane"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">abdelkrim-bournane</span></a></li><li><a href="https://www.twitter.com/karimkos"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">karimkos</span></a></li><li><a href="https://youtube.com/%40codewkarim"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#youtube"></use></svg> <span class="username">@codewkarim</span></a></li></ul>
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/karimkod"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">karimkod</span></a></li><li><a href="https://www.linkedin.com/in/abdelkrim-bournane"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">abdelkrim-bournane</span></a></li><li><a href="https://www.twitter.com/karimkos"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">karimkos</span></a></li></ul>
 </div>
 
       <div class="footer-col footer-col-3">
-        <p></p>
+        <p>Join me on a journey through software architecture, design, and engineering, as we delve into the world of programming, coding, C#, .NET, Flutter, and Dart. Learn about effective project management and discover ways to nurture your software engineering career. Let&#39;s explore together the ins and outs of building great software while sharing insights and tips for personal growth.</p>
       </div>
     </div>
 

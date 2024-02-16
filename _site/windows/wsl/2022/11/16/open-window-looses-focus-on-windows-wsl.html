@@ -8,8 +8,8 @@
 <meta property="og:title" content="Open Window Loses Focus Issue on Windows, the Reason Is Wsl" />
 <meta name="author" content="Abdelkrim Bourennane" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="I had an issue that was very annoying and disturbing, and I didn’t notice it until I focused very well on it and had to diagnose it to find what’s the problem really is and find a solution (if we can call it that) to it." />
-<meta property="og:description" content="I had an issue that was very annoying and disturbing, and I didn’t notice it until I focused very well on it and had to diagnose it to find what’s the problem really is and find a solution (if we can call it that) to it." />
+<meta name="description" content="I had an issue that was very annoying and disturbing, and I didn’t notice it until I focused very well on it and had to diagnose it to find what the problem was and find a solution (if we can call it that) to it." />
+<meta property="og:description" content="I had an issue that was very annoying and disturbing, and I didn’t notice it until I focused very well on it and had to diagnose it to find what the problem was and find a solution (if we can call it that) to it." />
 <link rel="canonical" href="http://localhost:4000/windows/wsl/2022/11/16/open-window-looses-focus-on-windows-wsl.html" />
 <meta property="og:url" content="http://localhost:4000/windows/wsl/2022/11/16/open-window-looses-focus-on-windows-wsl.html" />
 <meta property="og:site_name" content="Abdelkrim.blog" />
@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Open Window Loses Focus Issue on Windows, the Reason Is Wsl" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Abdelkrim Bourennane"},"dateModified":"2022-11-16T00:00:00+01:00","datePublished":"2022-11-16T00:00:00+01:00","description":"I had an issue that was very annoying and disturbing, and I didn’t notice it until I focused very well on it and had to diagnose it to find what’s the problem really is and find a solution (if we can call it that) to it.","headline":"Open Window Loses Focus Issue on Windows, the Reason Is Wsl","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/windows/wsl/2022/11/16/open-window-looses-focus-on-windows-wsl.html"},"url":"http://localhost:4000/windows/wsl/2022/11/16/open-window-looses-focus-on-windows-wsl.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Abdelkrim Bourennane"},"dateModified":"2022-11-16T00:00:00+01:00","datePublished":"2022-11-16T00:00:00+01:00","description":"I had an issue that was very annoying and disturbing, and I didn’t notice it until I focused very well on it and had to diagnose it to find what the problem was and find a solution (if we can call it that) to it.","headline":"Open Window Loses Focus Issue on Windows, the Reason Is Wsl","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/windows/wsl/2022/11/16/open-window-looses-focus-on-windows-wsl.html"},"url":"http://localhost:4000/windows/wsl/2022/11/16/open-window-looses-focus-on-windows-wsl.html"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Abdelkrim.blog" /><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon/favicon-32x32.png">
@@ -35,6 +35,16 @@
     <meta name="twitter:image" content="http://localhost:4000/assets/img/windows-wsl-focus-issue/1_e43YYm_XZI-inn_0-g4K3w.webp" />
   
   
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3PRFJF46SQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3PRFJF46SQ');
+</script>
+
 </head><body><header class="site-header" role="banner">
 
   <div class="wrapper"><a class="site-title" rel="author" href="/">Abdelkrim.blog</a><nav class="site-nav">
@@ -72,10 +82,10 @@
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>I had an issue that was very annoying and disturbing, and I didn’t notice it until I focused very well on it and had to diagnose it to find what’s the problem really is and find a solution (if we can call it that) to it.</p>
+    <p>I had an issue that was very annoying and disturbing, and I didn’t notice it until I focused very well on it and had to diagnose it to find what the problem was and find a solution (if we can call it that) to it.</p>
 
 <h2 id="the-symptoms-">The symptoms :</h2>
-<p>Any window you are using will lose focus and if you were typing into it, you will lose the ability to do so until you take the mouse and click on it in order to be able to type again. And this happens frequently until it becomes really annoying. (Sorry, I got mad).</p>
+<p>Any window you are using will lose focus and if you were typing into it, you will lose the ability to do so until you take the mouse and click on it to be able to type again. And this happens frequently until it becomes annoying. (Sorry, I got mad).</p>
 
 <h2 id="the-analysis-">The analysis :</h2>
 <p>After noticing the issue, I had to find a way to diagnose this and see why I was losing the window focus.</p>
@@ -124,7 +134,7 @@ public class APIFuncs
 
 <p><img src="/assets/img/windows-wsl-focus-issue/1_S505ppO_Y4g7o2YF0Lmd8w.webp" alt="screenshot of the search" /></p>
 
-<p>I was worried because I thought maybe someone has access to my computer over RDP. So, I check the <a href="https://www.anyviewer.com/how-to/view-connection-history-remote-desktop-windows-10-2578.html">history of RDP</a> connections in my PC and it was empty, then I checked if <a href="https://www.anyviewer.com/how-to/how-to-check-if-remote-desktop-is-enabled-0007.html">RDP was even enabled on my PC</a> but found nothing as well.</p>
+<p>I was worried because I thought maybe someone had access to my computer over RDP. So, I checked the <a href="https://www.anyviewer.com/how-to/view-connection-history-remote-desktop-windows-10-2578.html">history of RDP</a> connections in my PC and it was empty, then I checked if <a href="https://www.anyviewer.com/how-to/how-to-check-if-remote-desktop-is-enabled-0007.html">RDP was even enabled on my PC</a> but found nothing as well.</p>
 
 <p>So, I figured that if you double-click on the process in Process Explorer you can see what command line launched the process, and here was the Eureka moment.</p>
 
@@ -165,11 +175,11 @@ public class APIFuncs
           <li class="p-name">Abdelkrim Bourennane</li><li><a class="u-email" href="mailto:abdelkrim.bournane@gmail.com">abdelkrim.bournane@gmail.com</a></li></ul>
       </div>
 
-      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/karimkod"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">karimkod</span></a></li><li><a href="https://instagram.com/codewkarim"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#instagram"></use></svg> <span class="username">codewkarim</span></a></li><li><a href="https://www.linkedin.com/in/abdelkrim-bournane"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">abdelkrim-bournane</span></a></li><li><a href="https://www.twitter.com/karimkos"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">karimkos</span></a></li><li><a href="https://youtube.com/%40codewkarim"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#youtube"></use></svg> <span class="username">@codewkarim</span></a></li></ul>
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/karimkod"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">karimkod</span></a></li><li><a href="https://www.linkedin.com/in/abdelkrim-bournane"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">abdelkrim-bournane</span></a></li><li><a href="https://www.twitter.com/karimkos"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">karimkos</span></a></li></ul>
 </div>
 
       <div class="footer-col footer-col-3">
-        <p></p>
+        <p>Join me on a journey through software architecture, design, and engineering, as we delve into the world of programming, coding, C#, .NET, Flutter, and Dart. Learn about effective project management and discover ways to nurture your software engineering career. Let&#39;s explore together the ins and outs of building great software while sharing insights and tips for personal growth.</p>
       </div>
     </div>
 

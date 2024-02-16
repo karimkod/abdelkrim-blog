@@ -8,10 +8,10 @@ comments: true
 ---
 
 
-I had an issue that was very annoying and disturbing, and I didn’t notice it until I focused very well on it and had to diagnose it to find what’s the problem really is and find a solution (if we can call it that) to it.
+I had an issue that was very annoying and disturbing, and I didn’t notice it until I focused very well on it and had to diagnose it to find what the problem was and find a solution (if we can call it that) to it.
 
 ## The symptoms :
-Any window you are using will lose focus and if you were typing into it, you will lose the ability to do so until you take the mouse and click on it in order to be able to type again. And this happens frequently until it becomes really annoying. (Sorry, I got mad).
+Any window you are using will lose focus and if you were typing into it, you will lose the ability to do so until you take the mouse and click on it to be able to type again. And this happens frequently until it becomes annoying. (Sorry, I got mad).
 
 ## The analysis :
 After noticing the issue, I had to find a way to diagnose this and see why I was losing the window focus.
@@ -62,7 +62,7 @@ So, I opened the process explorer (you can find it and install it [here](https:/
 
 ![screenshot of the search](/assets/img/windows-wsl-focus-issue/1_S505ppO_Y4g7o2YF0Lmd8w.webp)
 
-I was worried because I thought maybe someone has access to my computer over RDP. So, I check the [history of RDP](https://www.anyviewer.com/how-to/view-connection-history-remote-desktop-windows-10-2578.html) connections in my PC and it was empty, then I checked if [RDP was even enabled on my PC](https://www.anyviewer.com/how-to/how-to-check-if-remote-desktop-is-enabled-0007.html) but found nothing as well.
+I was worried because I thought maybe someone had access to my computer over RDP. So, I checked the [history of RDP](https://www.anyviewer.com/how-to/view-connection-history-remote-desktop-windows-10-2578.html) connections in my PC and it was empty, then I checked if [RDP was even enabled on my PC](https://www.anyviewer.com/how-to/how-to-check-if-remote-desktop-is-enabled-0007.html) but found nothing as well.
 
 So, I figured that if you double-click on the process in Process Explorer you can see what command line launched the process, and here was the Eureka moment.
 

@@ -8,17 +8,19 @@
 <meta property="og:title" content="Toolbox For Porting Your Flutter Mobile Application to The Web" />
 <meta name="author" content="Abdelkrim Bourennane" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Since Google announced that Flutter web is stable starting from v2.0.0, a lot of business and application owners wanted to have a version of their already developed Flutter application ported to the web, since the web is easily accessible and Progressive Web Applications (PWA) offer an experience close to native apps." />
-<meta property="og:description" content="Since Google announced that Flutter web is stable starting from v2.0.0, a lot of business and application owners wanted to have a version of their already developed Flutter application ported to the web, since the web is easily accessible and Progressive Web Applications (PWA) offer an experience close to native apps." />
+<meta name="description" content="Unlock the potential of your Flutter mobile app on the web. Dive into the techniques and best practices of seamlessly porting your Flutter app to the web using Dart. Explore the intricacies of adapting UI components, optimizing performance, and ensuring a consistent user experience. Join me as we bridge the gap between mobile and web, harnessing the power of Flutter and Dart to extend your app’s reach and impact." />
+<meta property="og:description" content="Unlock the potential of your Flutter mobile app on the web. Dive into the techniques and best practices of seamlessly porting your Flutter app to the web using Dart. Explore the intricacies of adapting UI components, optimizing performance, and ensuring a consistent user experience. Join me as we bridge the gap between mobile and web, harnessing the power of Flutter and Dart to extend your app’s reach and impact." />
 <link rel="canonical" href="http://localhost:4000/flutter/2021/10/18/Toolbox-for-porting-your-Flutter-Mobile-Application-to-the-Web.html" />
 <meta property="og:url" content="http://localhost:4000/flutter/2021/10/18/Toolbox-for-porting-your-Flutter-Mobile-Application-to-the-Web.html" />
 <meta property="og:site_name" content="Abdelkrim.blog" />
+<meta property="og:image" content="http://localhost:4000/assets/img/flutter-web-portability/1_gnHqSRM2dV50E7xAoe1Lew.webp" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2021-10-18T00:00:00+01:00" />
-<meta name="twitter:card" content="summary" />
+<meta property="article:published_time" content="2021-10-18T00:00:00+02:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="http://localhost:4000/assets/img/flutter-web-portability/1_gnHqSRM2dV50E7xAoe1Lew.webp" />
 <meta property="twitter:title" content="Toolbox For Porting Your Flutter Mobile Application to The Web" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Abdelkrim Bourennane"},"dateModified":"2021-10-18T00:00:00+01:00","datePublished":"2021-10-18T00:00:00+01:00","description":"Since Google announced that Flutter web is stable starting from v2.0.0, a lot of business and application owners wanted to have a version of their already developed Flutter application ported to the web, since the web is easily accessible and Progressive Web Applications (PWA) offer an experience close to native apps.","headline":"Toolbox For Porting Your Flutter Mobile Application to The Web","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/flutter/2021/10/18/Toolbox-for-porting-your-Flutter-Mobile-Application-to-the-Web.html"},"url":"http://localhost:4000/flutter/2021/10/18/Toolbox-for-porting-your-Flutter-Mobile-Application-to-the-Web.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Abdelkrim Bourennane"},"dateModified":"2021-10-18T00:00:00+02:00","datePublished":"2021-10-18T00:00:00+02:00","description":"Unlock the potential of your Flutter mobile app on the web. Dive into the techniques and best practices of seamlessly porting your Flutter app to the web using Dart. Explore the intricacies of adapting UI components, optimizing performance, and ensuring a consistent user experience. Join me as we bridge the gap between mobile and web, harnessing the power of Flutter and Dart to extend your app’s reach and impact.","headline":"Toolbox For Porting Your Flutter Mobile Application to The Web","image":"http://localhost:4000/assets/img/flutter-web-portability/1_gnHqSRM2dV50E7xAoe1Lew.webp","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/flutter/2021/10/18/Toolbox-for-porting-your-Flutter-Mobile-Application-to-the-Web.html"},"url":"http://localhost:4000/flutter/2021/10/18/Toolbox-for-porting-your-Flutter-Mobile-Application-to-the-Web.html"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Abdelkrim.blog" /><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon/favicon-32x32.png">
@@ -35,6 +37,16 @@
     <meta name="twitter:image" content="http://localhost:4000/assets/img/flutter-web-portability/1_gnHqSRM2dV50E7xAoe1Lew.webp" />
   
   
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3PRFJF46SQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3PRFJF46SQ');
+</script>
+
 </head><body><header class="site-header" role="banner">
 
   <div class="wrapper"><a class="site-title" rel="author" href="/">Abdelkrim.blog</a><nav class="site-nav">
@@ -57,7 +69,7 @@
   <header class="post-header"><img src="/assets/img/flutter-web-portability/1_gnHqSRM2dV50E7xAoe1Lew.webp" alt="An illustration of porting a flutter mobile app to the web" class="featured-image-post" style="height: 350px; width: 100%; object-fit: cover;"><br/>
     <h1 class="post-title p-name" itemprop="name headline">Toolbox For Porting Your Flutter Mobile Application to The Web</h1>
     <p class="post-meta">
-      <time class="dt-published" datetime="2021-10-18T00:00:00+01:00" itemprop="datePublished">Oct 18, 2021
+      <time class="dt-published" datetime="2021-10-18T00:00:00+02:00" itemprop="datePublished">Oct 18, 2021
       </time>
       <span class="post-categories">
   
@@ -73,37 +85,43 @@
 
 <p>This article doesn’t discuss UI matters (responsiveness, UI/UX…), it only tackles the problems we may encounter for running the app and its functionalities on the web platform.</p>
 
-<p>Since that announcement, I’ve been on several projects of porting Flutter mobile applications to the web. And I have organized a set of steps and technics that I follow every time I have a Flutter application to port to the web. These steps make it easier for me to detect what is not supported on the web and, depending on the situation, fix it or change it.</p>
+<p>Since that announcement, I’ve been on several projects of porting Flutter mobile applications to the web. I have organized a set of steps and techniques that I follow every time I have a Flutter application to port to the web. These steps make it easier for me to detect what is not supported on the web and, depending on the situation, fix it or change it.</p>
 
 <h2 id="application-analysis-">Application Analysis :</h2>
-<p>The first step is analyzing the application, the goal of this step is to check if there are any dependencies that are not supported on the web. The first thing to do is try to run for the web by executing</p>
+
+<p>The first step is analyzing the application, the goal of this step is to check if any dependencies are not supported on the web. The first thing to do is try to run for the web by executing</p>
 
 <p><code class="language-plaintext highlighter-rouge">flutter run -d chrome</code>
-Or change the target to chrome and run it from your IDE.</p>
+Or change the target to Chrome and run it from your IDE.</p>
 
 <p>This step is just to discover if there is anything that’s preventing the compilation to the web (probably the use of a dart library that’s not supported on the web. If any, refer to 2 —The toolbox part of this article) If the application ran properly it doesn’t mean that it’s working on the web and our job is done! Some issues may appear at runtime.</p>
 
 <p>Now, if the application ran without any compilation error we proceed with the second phase of the application analysis, which is analyzing the dependencies. There are two kinds of dependencies that may interfere with our goal :</p>
 
 <h3 id="dart-libraries-">Dart libraries :</h3>
+
 <p>Sometimes developers use dart core libraries for some specific functionalities like using the File type (dart:io) and JSON encoding/decoding (dart:convert). Well, some of these core libraries are only supported in dart native platforms and not on the web and vice-versa. So, part of our job is to check if we are referring to any of these in our code. You can check the compatibility of the library with the target platform on the official page.</p>
 
 <h3 id="external-packages-">External packages :</h3>
-<p>The other resort for developers to find a tool that fits their needs is the famous pub.dev, we refer to the package and the version we want to use in the pubspec.yaml file. So, our job is to go through that list (manually for now) and check if the package is web-compatible. We can know by checking the pub.dev page of that package and check the platform tags of the version we depend on. For instance, the 7.3.1 version of flutter_bloc package is supported in Android, IOS, Linux, macOS, Web, and Windows and we can see that in the tags (we can change the version of the package in the versions tab):</p>
+
+<p>The other resort for developers to find a tool that fits their needs is the famous pub.dev, we refer to the package and the version we want to use in the pubspec.yaml file. So, our job is to go through that list (manually for now) and check if the package is web-compatible. We can know by checking the pub.dev page of that package and checking the platform tags of the version we depend on. For instance, the 7.3.1 version of flutter_bloc package is supported in Android, IOS, Linux, macOS, Web, and Windows and we can see that in the tags (we can change the version of the package in the versions tab):</p>
 
 <p>After we have identified the blockers we start tackling them one by one using the appropriate tool each time.</p>
 
 <h2 id="the-toolbox-">The Toolbox :</h2>
+
 <p>In this part, we will go through the tools that will help us tackle the blockers we identified. The usage of each tool depends on your situation. The goal of this enumeration is to put the tools we have in front of us.</p>
 
 <h3 id="alternatives-">Alternatives :</h3>
-<p>The first smart step we can do is finding alternatives. This can either be a recent version of the same package or a completely different package. Most packages’ authors have upgraded their packages to support the web, it’s a good reflex to go check if the packages have a recent version that supports web or, sometimes, it refers to another package that’s considered a fork/upgrade of it that does.</p>
+
+<p>The first smart step we can take is finding alternatives. This can either be a recent version of the same package or a completely different package. Most packages’ authors have upgraded their packages to support the web, it’s a good reflex to go check if the packages have a recent version that supports the web or, sometimes, it refers to another package that’s considered a fork/upgrade of it that does.</p>
 
 <p>Another factor that comes into play when replacing a package (especially if we didn’t make a boundary between it and our code) is the time and effort of the substitution.</p>
 
 <p>Sometimes, we can’t find that alternative or it’s costly to adopt it. Then, It’s practical to keep the mobile code as it is and implement something web-specific.</p>
 
 <h3 id="platform-specific-code-">Platform-specific Code :</h3>
+
 <p>Flutter and dart offer many ways to write and selectively execute platform-specific code.</p>
 
 <p>To select which platform code to execute, dart has two mechanisms that help us decide in case of the web:</p>
@@ -112,10 +130,11 @@ Or change the target to chrome and run it from your IDE.</p>
 The kIsWeb is a boolean that will be set to true if your application is running on a web platform. This boolean is pretty useful to execute code that’s specific to the web.</p>
 
 <p><strong>Conditional Imports:</strong>
-Sometimes, we used libraries that prevent our code from even compiling to a specific platform (case of dart platform libraries — see above). The solution to that is to conditionally import a library. Conditional imports (it’s polymorphism for packages) let you import a package instead of another one if a condition is met, though, they need to provide the same interfaces (just like polymorphism) so that the substitution keeps the code valid.</p>
+Sometimes, we use libraries that prevent our code from even compiling to a specific platform (case of dart platform libraries — see above). The solution to that is to conditionally import a library. Conditional imports (it’s polymorphism for packages) let you import a package instead of another one if a condition is met, though, they need to provide the same interfaces (just like polymorphism) so that the substitution keeps the code valid.</p>
 
 <p>If, for example, we have package abc that is supported on mobile and xyz that’s supported on the web and they provide the same interfaces. We can write :</p>
-<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="s">'package:abc/abc.dart'</span> 
+
+<div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="s">'package:abc/abc.dart'</span>
 <span class="k">if</span><span class="o">(</span><span class="n">dart</span><span class="o">.</span><span class="na">library</span><span class="o">.</span><span class="na">js</span><span class="o">)</span> <span class="s">'package:xyz/xyz.dart'</span> <span class="c1">// in case of web</span>
 </code></pre></div></div>
 
@@ -124,9 +143,9 @@ Sometimes, we used libraries that prevent our code from even compiling to a spec
 <p>Now, having mechanisms to help us select what platform code to execute, we can use the tools that help us write web-specific code.</p>
 
 <p><strong>Using a Javascript Code/Library:</strong>
-As you may know, dart supports Javascript interoperability which allows it to deal with JS code. We can use this to our advantage. Sometimes we find out that the official flutter SDK we are using (for my case it was braintree payment SDK by the time of the writing) doesn’t support flutter web ‘officially’. And that solution has an official js library. We can, using js interoperability; use that js library on the flutter web.</p>
+As you may know, dart supports Javascript interoperability which allows it to deal with JS code. We can use this to our advantage. Sometimes we find out that the official flutter SDK we are using (in my case it was braintree payment SDK by the time of the writing) doesn’t support flutter web ‘officially’. And that solution has an official JS library. We can, using js interoperability; use that js library on the flutter web.</p>
 
-<p>The js package can help us do that. It is used by defining dart classes/functions that are equivalent to the JS code and let their implementation be provided from javascript (by using the external keyword) And then we mark the dart code with annotations. For example, we can use JSON.stringify from dart by, first, defining the equivalent dart code:</p>
+<p>The js package can help us do that. It is used by defining dart classes/functions that are equivalent to the JS code and letting their implementation be provided from javascript (by using the external keyword) then we mark the dart code with annotations. For example, we can use JSON.stringify from dart by, first, defining the equivalent dart code:</p>
 
 <div class="language-dart highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@JS</span><span class="o">()</span>
 <span class="kn">library</span> <span class="n">stringify</span><span class="o">;</span>
@@ -138,7 +157,8 @@ As you may know, dart supports Javascript interoperability which allows it to de
 <p>and then just call the stringify function in a dart code. For an advanced example, refer to the charjs.dart repo (I often use it as my reference).</p>
 
 <h3 id="3---extending-packages-">3 - Extending packages :</h3>
-<p>Now, if you still want to use one flutter package for all platforms (for any reason you have) or you think that changing to another package can be costly.You can still use the open-heart surgery option (thanks to the open-source nature of flutter and flutter packages).</p>
+
+<p>Now, if you still want to use one flutter package for all platforms (for any reason you have) or you think that changing to another package can be costly. You can still use the open-heart surgery option (thanks to the open-source nature of flutter and flutter packages).</p>
 
 <p>This solution may seem complicated but once we know the basics of creating flutter packages and read some useful articles about it (with good repository references and examples) it becomes more accessible to do it (depending on our knowledge of the target platform) All we have to do is fork the package and start working on it.</p>
 
@@ -153,6 +173,7 @@ As you may know, dart supports Javascript interoperability which allows it to de
 <p>I have personally used this to extend the geocoding package, which was a federated plugin; to support the web.</p>
 
 <h2 id="conclusion">Conclusion</h2>
+
 <p>Now, we did what’s necessary but the only way to know if our job is done is by going through an efficient test process (favorably, automatic, or else manual).
 Having this toolbox in hand can, hopefully; be useful to you. If you have any feedback/comments/Critics or you just wanna connect. please reach out to me through my LinkedIn or leave them in the comment section.</p>
 
@@ -172,11 +193,11 @@ Having this toolbox in hand can, hopefully; be useful to you. If you have any fe
           <li class="p-name">Abdelkrim Bourennane</li><li><a class="u-email" href="mailto:abdelkrim.bournane@gmail.com">abdelkrim.bournane@gmail.com</a></li></ul>
       </div>
 
-      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/karimkod"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">karimkod</span></a></li><li><a href="https://instagram.com/codewkarim"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#instagram"></use></svg> <span class="username">codewkarim</span></a></li><li><a href="https://www.linkedin.com/in/abdelkrim-bournane"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">abdelkrim-bournane</span></a></li><li><a href="https://www.twitter.com/karimkos"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">karimkos</span></a></li><li><a href="https://youtube.com/%40codewkarim"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#youtube"></use></svg> <span class="username">@codewkarim</span></a></li></ul>
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/karimkod"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">karimkod</span></a></li><li><a href="https://www.linkedin.com/in/abdelkrim-bournane"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">abdelkrim-bournane</span></a></li><li><a href="https://www.twitter.com/karimkos"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">karimkos</span></a></li></ul>
 </div>
 
       <div class="footer-col footer-col-3">
-        <p></p>
+        <p>Join me on a journey through software architecture, design, and engineering, as we delve into the world of programming, coding, C#, .NET, Flutter, and Dart. Learn about effective project management and discover ways to nurture your software engineering career. Let&#39;s explore together the ins and outs of building great software while sharing insights and tips for personal growth.</p>
       </div>
     </div>
 
