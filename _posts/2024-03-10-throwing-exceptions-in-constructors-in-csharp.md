@@ -5,6 +5,7 @@ categories: .NET C#
 featured_image: /assets/img/note-on-throwing-exceptions/exceptions.webp
 image: /assets/img/note-on-throwing-exceptions/exceptions.webp
 featured_image_alt: An illustration of throwing exceptions on constructors
+cannonical_url: https://blog.cellenza.com/en/software-development/should-we-throw-exceptions-on-constructions-in-c/
 comments: true
 ---
 In this article, we will take a look into some details of throwing exceptions in the constructor of reference types in .NET, we will analyze it from the memory management point of view and also from code maintainability perspective.
