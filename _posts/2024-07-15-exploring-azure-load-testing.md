@@ -1,5 +1,5 @@
 ---
-title: Introduction to Load Testing With Azure Load Testing
+title: Exploring Load Testing With Azure Load Testing
 description: In this article, we will talk about load testing, its different types and see how we can implement some of them using Azure Load Testing.
 categories: Azure 
 featured_image: /assets/img/azure-load-testing/azure-load-testing.webp
