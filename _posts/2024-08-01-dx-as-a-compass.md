@@ -151,6 +151,8 @@ Alongside LRM, it's important to think twice about the cost of each decision, do
 
 All these questions are worth asking and sometimes answering them improves the DX and the design.
 
+An example would be adding persistence in the project, if I steongly couple my code with the ORM or the Database driver, then I'd always need a database running to do my iterations even when I'm working on the business rules. That's clearly bad DX znd bad design.
+
 ### Stay up to date
 
 Know your abstractions, because you will need to know their internals when your code breaks, paraphrasing a tweet that I encountered:
@@ -167,7 +169,8 @@ Mind your CI/CD pipelines as they will allow you to iterate quickly and push fix
 
 This will help you sleep peacefully and if you woke up because of a night call, you will go back to sleep pretty quickly. 
 
-# Conclusion
+In the same philosophy, it's a good tip to automate what you do often this way you can do it without thinking and document what you do rarely, this way you can find how to do it pretty easily.
+
 
 To conclude, I hope this article helped you see why I decided to improve my developer experience in order to improve the quality of my craft and I hope you now know the technics that helped me achieve that.
 
