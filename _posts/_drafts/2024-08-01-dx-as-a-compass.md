@@ -64,7 +64,7 @@ Everyone can have this but (10x Developers. No. I’m joking) to have a better D
 
 Having a set of aliases or ready to run commands in your terminal as well as knowing a scripting language can help you increase your productivity. 
 
-All this will help you get started easily, and even help with procrastination, and believe a lot of bad code and design come from procrastination and doing things “later” that is spelled “n-e-v-e-r”. 
+All this will help you get started easily, and even help with procrastinating, and believe me a lot of bad code and design come from procrastination and deciding to do things “later” that is spelled “n-e-v-e-r”. 
 
 Now that we have talked about the technical toolbox, let’s talk a bit about some technics and concepts that helped me with improving me DX. these have helped me personally, see if it applies to you as well and your feedback is always welcome.
 
@@ -145,6 +145,14 @@ Learning how to architect the software and how to write better code will only be
 
 Use Domain Driven Design to better capture the concepts of the business domain in your code, it will help reduce the communication overhead, and it will easily allow you to map the business to your code. And it will drastically reduce the ramp up time for new colleagues
 
+### Thinking Twice 
+
+Alongside LRM, it's important to think twice about the cost of each decision, does it affect my feedback loop? Does it decrease the quality of my code? Is there a way to isolate the instable parts to protect myself from it? Maybe behind an interface so I can swap it easily? Does the decision introduce a technicial debt that I need to pay in the future? 
+
+All these questions are worth asking and sometimes answering them improves the DX and the design.
+
+An example would be adding persistence in the project, if I steongly couple my code with the ORM or the Database driver, then I'd always need a database running to do my iterations even when I'm working on the business rules. That's clearly bad DX znd bad design.
+
 ### Stay up to date
 
 Know your abstractions, because you will need to know their internals when your code breaks, paraphrasing a tweet that I encountered:
@@ -161,7 +169,8 @@ Mind your CI/CD pipelines as they will allow you to iterate quickly and push fix
 
 This will help you sleep peacefully and if you woke up because of a night call, you will go back to sleep pretty quickly. 
 
-# Conclusion
+In the same philosophy, it's a good tip to automate what you do often this way you can do it without thinking and document what you do rarely, this way you can find how to do it pretty easily.
+
 
 To conclude, I hope this article helped you see why I decided to improve my developer experience in order to improve the quality of my craft and I hope you now know the technics that helped me achieve that.
 
