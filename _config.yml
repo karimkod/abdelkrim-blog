@@ -17,9 +17,9 @@ show_excerpts: true
 theme: minima
 
 disqus: 
-    shortname: abdelkrim-blog
+  shortname: abdelkrim-blog
 
-gem:
-    - jekyll-seo-tag
-    - jekyll-sitemap
-    - jekyll-feed
+gems:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
