@@ -1,6 +1,7 @@
 ---
 title: "Taming SQL Isolation Levels (Part 1: Read Anomalies & Fixes)"
-seo_title: "Understanding SQL Transaction Isolation Levels: A Guide to Read Anomalies | Part 1"
+seo:
+  title: "Understanding SQL Transaction Isolation Levels: A Guide to Read Anomalies | Part 1"
 description: "Learn how to fix inconsistent database reads with SQL isolation levels. See real examples of dirty reads and non-repeatable reads with PostgreSQL and SQLite, plus performance benchmarks."
 categories: [SQL, Databases, C#, .NET, Performance]
 keywords: [sql isolation levels, database transactions, dirty reads, non-repeatable reads, postgresql, sqlite, database performance, acid properties, transaction isolation]
