@@ -1,16 +1,14 @@
 ---
-title: Taming SQL Isolation Levels (Part 1 - Read Anomalies & Fixes)
-description: Dive into SQL transaction isolation levels with real-world examples. Learn why your database queries return inconsistent results and how to fix read anomalies in PostgreSQL and SQLite.
-categories: SQL Databases C# .NET 
+title: "Taming SQL Isolation Levels (Part 1: Read Anomalies & Fixes)"
+seo_title: "Understanding SQL Transaction Isolation Levels: A Guide to Read Anomalies | Part 1"
+description: "Learn how to fix inconsistent database reads with SQL isolation levels. See real examples of dirty reads and non-repeatable reads with PostgreSQL and SQLite, plus performance benchmarks."
+categories: [SQL, Databases, C#, .NET, Performance]
+keywords: [sql isolation levels, database transactions, dirty reads, non-repeatable reads, postgresql, sqlite, database performance, acid properties, transaction isolation]
 featured_image: /assets/img/taming-sql-transactions-part-1/thumbnail.svg
 image: /assets/img/taming-sql-transactions-part-1/thumbnail.svg
-featured_image_alt: an image showing illustration of a database 
+featured_image_alt: "SQL Transaction Isolation Levels - database consistency illustration"
 comments: true
 ---
-# SQL Database Isolation and its Cost
-
-Category: Blog
-
 When discussing SQL database transactions, ACID properties are typically the first concept that comes to mind (or ORM, for those seeking abstraction). 
 
 Transactions and ACID properties together provide developers with guarantees and handle much of the complexity, such as enabling rollbacks for sets of operations (Atomicity), ensuring data persistence (Durability), and maintaining database constraints (Consistency).
@@ -19,7 +17,7 @@ And as with every abstraction, we need to understand its working, its quirks, an
 
 In my view, isolation (I) is an interesting one, especially for data manipulation in concurrent environments. And it's up to us as developers to set what isolation level we need, that's why it's important to understand it more than the other letters (no discrimination intended, without the other letters I wouldn't be able to write this article). 
 
-## Database Isolation Levels
+## What Are Database Isolation Levels? A Quick Guide
 
 Isolation guarantees apply to concurrent transactions, particularly those that manipulate the same database resources (tables or rows in SQL databases). Isolation dictates what's visible and what's not from other ongoing transactions. 
 
@@ -34,17 +32,22 @@ In the SQL Standard (ISO/IEC 9075) we find four isolation levels, ordered from l
 
 These levels are the standard ones, database vendors don't implement all of them, for example in SQLite we only have READ UNCOMMITTED and SERIALIZABLE and in PostgreSQL READ UNCOMMITTED acts like READ COMMITTED, so to explore each level we need to use two different databases.
 
+## Real-World Example: Building a Room Booking System
+
 To demonstrate isolation issues, let's consider a room booking service with two primary use cases:
 
 - Use case 1: A user can rent a room and be invoiced.
 - Use case 2: Get an inventory of the rooms booked and the invoices issued.
 
+### The Database Schema
+
 The database schema is pretty simple:
 
 ![Database Schema](/assets/img/taming-sql-transactions-part-1/database_schema.svg)
 
-
 Four tables, one to hold user data, one to hold rooms, one to hold Invoices, and the last to hold bookings. 
+
+### How Bookings Work
 
 To book a room, we need three pieces of information:
 
@@ -65,11 +68,17 @@ The interaction with the database is summarized in the following diagram:
 
 ![A diagram showing interaction to book a room](/assets/img/taming-sql-transactions-part-1/interaction.svg)
 
+### The Inventory Problem
+
 Now, to have the inventory, we need to get all Bookings and all Invoices and return a result. The interaction is the following:
 
 ![A diagram showing interaction to get the inventory](/assets/img/taming-sql-transactions-part-1/inventory_interactin.svg)
 
 The inventory is just a check on the current state of the business, by getting all the bookings and the invoices.
+
+## Investigating Isolation Issues
+
+### Problem 1: Dirty Reads with READ UNCOMMITTED
 
 For this first scenario, I will use the loosest isolation level, READ UNCOMMITTED. We will try to identify the problems that can occur and their solutions.
 
@@ -85,7 +94,7 @@ Theoretically, there is also another issue that we might encounter with READ UNC
 
 I say theoretically because some vendors prevent it even if you run the transaction with READ UNCOMMITTED isolation.
 
-### Running the code
+### Testing READ UNCOMMITTED in Action
 
 To implement READ UNCOMMITTED, I had to use SQLite and activate it using:
 
@@ -99,7 +108,7 @@ To simulate parallel requests, I used [k6](https://k6.io/) and its [checks](http
 
 The script to book rooms simulates 100 users booking rooms for 70 seconds:
 
-```sql
+```js
 import http from 'k6/http';
 
 //  k6 run .\book_lt.js
@@ -170,13 +179,15 @@ While this benchmark doesn't follow all standard benchmarking practices, the res
 
 Of the 71 inventory requests, only 33% showed valid inventory (24 correct vs 47 incorrect).
 
-### Solutions
+## Solving Isolation Problems
+
+### Solution 1: Moving to READ COMMITTED
 
 From a business perspective, intermediate inconsistent results may be acceptable in some cases. Alternatively, inventory operations can be scheduled outside business hours to minimize concurrent write operations.
 
 For technical solutions, we can upgrade our isolation level to READ COMMITTED.
 
-### Applying READ COMMITTED isolation level
+### Why READ COMMITTED Isn't Enough
 
 Since SQLite doesn't support READ COMMITTED, we'll switch to PostgreSQL. Note that this means we cannot directly compare results with the previous run due to the different environment.
 
@@ -212,9 +223,9 @@ This phenomenon is called read skew or "non-repeatable read" because reading the
 
 While this might not be problematic for user interfaces where a refresh can resolve the inconsistency, it can cause serious issues for operations like backups or report generation.
 
-The solution is to upgrade to the next isolation level: REPEATABLE READ or SNAPSHOT isolation (terminology varies by vendor).
+### Solution 2: Using REPEATABLE READ for Consistency
 
-### Using The REPEATABLE READ / SNAPSHOT Isolation
+The solution is to upgrade to the next isolation level: REPEATABLE READ or SNAPSHOT isolation (terminology varies by vendor).
 
 With snapshot isolation, the database captures a snapshot of the table states when the transaction begins, and all reads within that transaction use that snapshot. Rather than locking tables, [PostgreSQL implements Multi-Version Concurrency Control](https://www.postgresql.org/docs/current/mvcc-intro.html) (MVCC). This approach is advantageous since reading operations never block writing operations and vice versa.
 
@@ -234,11 +245,13 @@ Using snapshot isolation, we get:
 
 Of the 193 requests, 100% showed valid inventory.
 
+## Next Steps: Write Conflicts and SERIALIZABLE Isolation
+
 While this resolves our immediate concerns, it's worth noting that our booking system doesn't check for overlapping bookings. In a real-world scenario, we would need to implement such verification, which introduces additional challenges.
 
 The problems we've solved here arise from write transactions interfering with read transactions. In the next article, we'll examine issues that occur when write transactions interfere with each other.
 
-## Summary
+## Resources and Further Reading
 
 We've explored various issues that can arise from concurrent access to database resources, particularly how read transactions can receive inconsistent results due to parallel write transactions. We analyzed their frequency of occurrence and potential business impact. Finally, we examined how different isolation levels in SQLite and PostgreSQL can help solve these problems.
 

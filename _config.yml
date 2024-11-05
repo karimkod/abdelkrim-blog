@@ -21,3 +21,5 @@ disqus:
 
 gem:
     - jekyll-seo-tag
+    - jekyll-sitemap
+    - jekyll-feed
