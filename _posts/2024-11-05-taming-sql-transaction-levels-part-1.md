@@ -165,6 +165,7 @@ Although this benchmark isn’t a real benchmark as it lacks many benchmarking p
 | Number of requests | Failed Requests | Avg request duration | p(90) request duration | median duration | number of users  | total test duration |
 | --- | --- | --- | --- | --- | --- | --- |
 | 23288 | 0 | 217.2ms | 590.29ms | 48.55ms | 100 | 1min 10s |
+
 1. The inventory load test result:
 
 | Number of requests | Failed Requests | Avg request duration | p(90) request duration | median duration | number of users  | total test duration |
@@ -190,6 +191,7 @@ Switching the isolation level and running the same scenario.
 | Number of requests | Failed Requests | Avg request duration | p(90) request duration | median duration | number of users  | total test duration |
 | --- | --- | --- | --- | --- | --- | --- |
 | 36902 | 0 | 135.54ms | 223.51ms | 130.23ms | 100 | 1min 10s |
+
 1. The inventory load test result:
 
 | Number of requests | Failed Requests | Avg request duration | p(90) request duration | median duration | number of users  | total test duration |
@@ -229,6 +231,7 @@ By using snapshot isolation we get :
 | Number of requests | Failed Requests | Avg request duration | p(90) request duration | median duration | number of users  | total test duration |
 | --- | --- | --- | --- | --- | --- | --- |
 | 37241 | 0 | 134.28ms | 249.13ms | 122.83ms | 100 | 1min 10s |
+
 1. The inventory load test result:
 
 | Number of requests | Failed Requests | Avg request duration | p(90) request duration | median duration | number of users  | total test duration |
